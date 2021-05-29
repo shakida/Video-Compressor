@@ -1,8 +1,8 @@
 # Change input and output details
 
-output_path="your_name1"
-input_url="https://drive.google.com/u/0/uc?export=download&confirm=KqE_&id=1UGRjoM3iDa3Esoqtk-n4GuCW_mq89BrQ"
-input_extension="mkv" # Extension of file url
+output_path="your_name2"
+input_url="https://mirror.shakida-index.workers.dev/Your%20Name%202016%20%5BDUB%5D.mp4"
+input_extension="mp4" # Extension of file url
 
 
 
