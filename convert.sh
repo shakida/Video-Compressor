@@ -1,7 +1,8 @@
 # Change input and output details
 
 output_path= "ott"
-input_url= "https://doc-0s-9s-docs.googleusercontent.com/docs/securesc/cdmdt1n1l002vqu4pj2i1m05k2rpl5o1/quab213pvksgc2nar2t616dvg460r2nt/1634932875000/14702626252152117205/02576778343569645320Z/1mL6qWsH729mAPogtysiiW3eKSG9VQWzW?e=download"
+Iinput_url= "https://doc-0s-9s-docs.googleusercontent.com/docs/securesc/cdmdt1n1l002vqu4pj2i1m05k2rpl5o1/quab213pvksgc2nar2t616dvg460r2nt/1634932875000/14702626252152117205/02576778343569645320Z/1mL6qWsH729mAPogtysiiW3eKSG9VQWzW?e=download"
+input_url = "https://doc-00-5s-docs.googleusercontent.com/docs/securesc/ha0ro937gcuc7l7deffksulhg5h7mbp1/6mifl11dhebns53e1jvag2li6k9m9anv/1634932800000/14702626252152117205/*/1_x43X6Tje-1zbZ67RU_lJmkj7YC_P0PR?e=download"
 input_extension="mp4" # Extension of file url
 
 
