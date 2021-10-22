@@ -1,7 +1,7 @@
 # Change input and output details
 
-output_path="your_name2"
-input_url="https://mirror.shakida-index.workers.dev/Your%20Name%202016%20%5BDUB%5D.mp4"
+output_path= ${{ secrets.OUTPUT }}
+input_url= ${{ secrets.Link }}
 input_extension="mp4" # Extension of file url
 
 
