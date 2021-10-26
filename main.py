@@ -1,7 +1,7 @@
 # Beta version
 # By me (tg-@shakida69)
 import os
-from pyrogram import Client, filters
+from pyrogram import Client, filters, idle
 from pyrogram.types import Message
 from pyrogram.raw import functions, types
 import pyrogram
@@ -86,4 +86,4 @@ async def shell(client: shakida, message: Message):
         await message.reply_text(reply)
 
 
-
+idle()
