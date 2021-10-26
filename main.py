@@ -9,6 +9,7 @@ from os import path
 import uuid
 import subprocess
 import asyncio
+import wget
 
 
 shakida = Client(
