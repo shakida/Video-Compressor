@@ -40,7 +40,7 @@ async def live(s: shakida, message: Message):
              )
              await p.edit(f'Compressing........')
              await proc.communicate()
-             await p.edit(f'✅ Done:\nFile Path: `{output_path}/master.m3u8`')
+             await p.edit(f'✅ Done:\nFile Path: `{output_path}`')
          except Exception as a:
              await p.edit(f'ERROR 69: `{a}`')
       except Exception as a:
