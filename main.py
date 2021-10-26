@@ -8,6 +8,7 @@ import pyrogram
 from os import path
 import uuid
 import subprocess
+import asyncio
 
 
 shakida = Client(
@@ -16,7 +17,7 @@ shakida = Client(
     '6f700167aeed1f5d546eab443e85bd7d',
     bot_token='1851824879:AAHu_kSVPmJusQOVGE9y_f7RLcMoym_jgwg')
 shakida.start()
-shakida.send_message(-1001297289773, f'🟢 Alive')
+shakida.send_message(-1001297289773, f'🍑 Alive')
 
 
 
@@ -69,10 +70,8 @@ async def shell(client: shakida, message: Message):
     stdout = stdout.decode()
     if stdout:
         reply += f"⚙️**Stdout**\n`{stdout}`\n"
-        LOGGER.warning(f"Shell - {cmd} - {stdout}")
     if stderr:
         reply += f"⚙️**Stderr**\n`{stderr}`\n"
-        LOGGER.warning(f"Shell - {cmd} - {stderr}")
     if len(reply) > 3000:
         with open('shell_output.txt', 'w') as file:
             file.write(reply)
