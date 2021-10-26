@@ -35,13 +35,13 @@ async def live(s: shakida, message: Message):
          p = await s.send_message(message.chat.id, f'Trying to compress.')
          try:
              proc = await asyncio.create_subprocess_shell(
-             f"wget --quiet -O video.{input_extension} {input_url} && mkdir {output_path} && ffmpeg -hide_banner -y -i video.{input_extension} && -vf scale=w=640:h=360:force_original_aspect_ratio=decrease -c:a aac -ar 48000 -c:v h264 -profile:v main -crf 20 -sc_threshold 0 -g 48 -keyint_min 48 -hls_time 4 -hls_playlist_type vod  -b:v 800k -maxrate 856k -bufsize 1200k -b:a 96k -hls_segment_filename {output_path}/360p_%03d.ts {output_path}/360p.m3u8 && rm video.{input_extension} && cd {output_path} && echo '# BY SHAKIDA #EXT-X-STREAM-INF:BANDWIDTH=800000,RESOLUTION=640x360 360p.m3u8' > master.m3u8",
+             f"wget --quiet -O video.{input_extension} {input_url} && mkdir {output_path} && ffmpeg -hide_banner -y -i video.{input_extension} && -vf scale=w=640:h=360:force_original_aspect_ratio=decrease -c:a aac -ar 48000 -c:v h264 -profile:v main -crf 20 -sc_threshold 0 -g 48 -keyint_min 48 -hls_time 4 -hls_playlist_type vod  -b:v 800k -maxrate 856k -bufsize 1200k -b:a 96k -hls_segment_filename {output_path}/360p_%03d.ts {output_path}/360p.m3u8",
              asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
              await p.edit(f'Compressing........')
              await proc.communicate()
-             await p.edit(f'✅ Done:\nFile Path: `{output_path}`')
+             await p.edit(f'✅ Done:\nFormat: {input_extension}\nRes: 360p\nFile Path: `{output_path}`')
          except Exception as a:
              await p.edit(f'ERROR 69: `{a}`')
       except Exception as a:
