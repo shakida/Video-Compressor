@@ -28,7 +28,7 @@ async def live(s: shakida, message: Message):
          input_extension="mkv"
          tempid = uuid.uuid4()
          output_path = "tempid"
-         p = await s.send_message(message.chat.id, f'Trying to compress\nRes 360p')
+         p = await s.send_message(message.chat.id, f'Trying to compress.')
          try:
              proc = await asyncio.create_subprocess_shell(
              f"wget --quiet -O video.{input_extension} {input_url} \
@@ -41,12 +41,14 @@ async def live(s: shakida, message: Message):
              asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
+             await p.edit(f'Compressing........')
              await proc.communicate()
              await p.edit(f'✅ Done:\nFile Path: `{output_path}/master.m3u8`)
          except Exception as a:
              await p.edit(f'ERROR 69: {a})
-             return
-
+      except Exception as a:
+         await s.send_message(message.chat.id, f'ERROR X: {a}')
+         return
 
 
 
@@ -80,3 +82,8 @@ async def shell(client: shakida, message: Message):
                 chat_id=message.chat_id)
     else:
         await message.reply_text(reply)
+
+
+
+
+shakida.start()
