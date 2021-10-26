@@ -1,0 +1,4 @@
+ffmpeg
+asyncio
+TgCrypto
+pyrogram
