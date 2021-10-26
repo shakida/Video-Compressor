@@ -29,7 +29,7 @@ async def live(s: shakida, message: Message):
          input_url = query
          input_extension="mkv"
          tempid = uuid.uuid4()
-         output_path = "tempid"
+         output_path = tempid
          p = await s.send_message(message.chat.id, f'Trying to compress.')
          try:
              proc = await asyncio.create_subprocess_shell(
@@ -45,11 +45,11 @@ async def live(s: shakida, message: Message):
              )
              await p.edit(f'Compressing........')
              await proc.communicate()
-             await p.edit(f'✅ Done:\nFile Path: `{output_path}/master.m3u8`)
+             await p.edit(f'✅ Done:\nFile Path: `{output_path}/master.m3u8`')
          except Exception as a:
-             await p.edit(f'ERROR 69: {a})
+             await p.edit(f'ERROR 69: `{a}`')
       except Exception as a:
-         await s.send_message(message.chat.id, f'ERROR X: {a}')
+         await s.send_message(message.chat.id, f'ERROR X: `{a}`')
          return
 
 
