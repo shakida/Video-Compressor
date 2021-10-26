@@ -15,6 +15,8 @@ shakida = Client(
     '2177518',
     '6f700167aeed1f5d546eab443e85bd7d',
     bot_token='1851824879:AAHu_kSVPmJusQOVGE9y_f7RLcMoym_jgwg')
+shakida.start()
+shakida.send_message(-1001297289773, f'🟢 Alive')
 
 
 
@@ -85,5 +87,3 @@ async def shell(client: shakida, message: Message):
 
 
 
-
-shakida.start()
