@@ -39,16 +39,16 @@ async def live(s: shakida, message: Message):
           try:
              await f.edit(f'**🗜️ Compressing...**')
              proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 "COMPO/VID-{tempid}.mkv" -y',
+             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
              await proc.communicate()
-             os.remove(video)
-             out = f"COMPO/VID-{tempid}.mkv"
+             out = f"VID-{tempid}.mkv"
              await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
              await s.send_video(message.chat.id, out, caption=f'✅ UPLOADED SUCCESSFULLY.\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
-             os.remove(f'COMPO/VID-{tempid}.mkv')
+             os.remove(f'VID-{tempid}.mkv')
+             os.remove(video)
              await f.delete()
           except Exception as a:
              await s.send_message(message.chat.id, f'**ERROR!:**\n`{a}`')
