@@ -45,10 +45,10 @@ async def live(s: shakida, message: Message):
              )
              await proc.communicate()
              os.remove(video)
-             out = f"COMPO/{tempid}.mkv"
+             out = f"COMPO/VID-{tempid}.mkv"
              await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
              await s.send_video(message.chat.id, out, caption=f'✅ UPLOADED SUCCESSFULLY.\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
-             os.remove(f'COMPO/{tempid}.mkv')
+             os.remove(f'COMPO/VID-{tempid}.mkv')
              await f.delete()
           except Exception as a:
              await s.send_message(message.chat.id, f'**ERROR!:**\n`{a}`')
