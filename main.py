@@ -25,14 +25,13 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def live(s: shakida, message: Message):
        try:
+          tempid = uuid.uuid4()
           videos = message.reply_to_message
           if videos.video or videos.document:
              f = await s.send_message(message.chat.id, f'📥 **Downloading..**')
-          if os.path.exists(f'VID-{message.chat.id}.raw'):
-             os.remove(f'VID-{message.chat.id}.raw')
           try:
              video = await s.download_media(videos)
-         #   os.system(f'ffmpeg -i "{video}" -vn -f s16le -ac 2 -ar 48000 -acodec pcm_s16le VID-{message.chat.id}.raw -y')
+         #   os.system(f'ffmpeg -i "{video}" -vn -f s16le -ac 2 -ar 48000 -acodec pcm_s16le VID-{}.raw -y')
         #    audio = f'VID-{message.chat.id}.raw'
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
@@ -40,19 +39,21 @@ async def live(s: shakida, message: Message):
           try:
              await f.edit(f'**🗜️ Compressing...**')
              proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 "VID-{message.chat.id}.mkv" -y',
+             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 "COMPO/VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
              await proc.communicate()
-             out = f"VID-{message.chat.id}.mkv"
-             await f.edit(f'**✅ DONE:**\nEngine: `Ffmapg`\nPreset: `ultrafast vcodec libx265`\nCrf: `27`')
-             await s.send_video(message.chat.id, out, caption=f'✅ UPLOADED')
-    
+             os.remove(video)
+             out = f"COMPO/{tempid}.mkv"
+             await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
+             await s.send_video(message.chat.id, out, caption=f'✅ UPLOADED SUCCESSFULLY.\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
+             os.remove(f'COMPO/{tempid}.mkv")
+             await f.delete()
           except Exception as a:
-             await f.edit(f'**ERROR!:**\n`{a}`')
+             await s.send_message(message.chat.id, f'**ERROR!:**\n`{a}`')
        except Exception as a:
-          await f.send_message(message.chat.id, f'**ERROR!!**\n`{a}`')
+          await s.send_message(message.chat.id, f'**ERROR!!**\n`{a}`')
           return
 
 
