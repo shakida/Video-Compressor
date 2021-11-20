@@ -24,29 +24,34 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def live(s: shakida, message: Message):
-      try:
-         query = ''
-         for i in message.command[1:]:
-              query += '' + str(i)
-         input_url = query
-         input_extension="mkv"
-         tempid = uuid.uuid4()
-         output_path = tempid
-         p = await s.send_message(message.chat.id, f'Trying to compress.')
-         try:
+       try:
+          videos = message.reply_to_message
+          if videos.video or videos.document:
+             f = await s.send_message(message.chat.id, f'📥 **Downloading..**')
+          if os.path.exists(f'VID-{message.chat.id}.raw'):
+             os.remove(f'VID-{message.chat.id}.raw')
+          try:
+             video = await s.download_media(videos)
+         #   os.system(f'ffmpeg -i "{video}" -vn -f s16le -ac 2 -ar 48000 -acodec pcm_s16le VID-{message.chat.id}.raw -y')
+        #    audio = f'VID-{message.chat.id}.raw'
+          except Exception as e:
+             await f.edit(f'**ERROR!:**\n`{e}`')
+             return
+          try:
              proc = await asyncio.create_subprocess_shell(
-             f"wget --quiet -O video.{input_extension} {input_url} && mkdir {output_path} && ffmpeg -hide_banner -y -i video.{input_extension} && -vf scale=w=640:h=360:force_original_aspect_ratio=decrease -c:a aac -ar 48000 -c:v h264 -profile:v main -crf 20 -sc_threshold 0 -g 48 -keyint_min 48 -hls_time 4 -hls_playlist_type vod  -b:v 800k -maxrate 856k -bufsize 1200k -b:a 96k -hls_segment_filename {output_path}/360p_%03d.ts {output_path}/360p.m3u8",
-             asyncio.subprocess.PIPE,
+             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 VID-{message.chat.id}.mkv -y',
+             stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
-             await p.edit(f'Compressing........')
              await proc.communicate()
-             await p.edit(f'✅ Done:\nFormat: {input_extension}\nRes: 360p\nFile Path: `{output_path}`')
-         except Exception as a:
-             await p.edit(f'ERROR 69: `{a}`')
-      except Exception as a:
-         await s.send_message(message.chat.id, f'ERROR X: `{a}`')
-         return
+             await f.edit(f'**✅ DONE:**\nEngine: `Ffmapg`\nPreset: `ultrafast vcodec libx265`\nCrf: `27`')
+             await s.send_file(message.chat.id, file=f'VID-{message.chat.id}'.mkv, caption=f'✅ UPLOADED', force_document=True)
+    
+          except Exception as a:
+             await f.edit(f'**ERROR!:**\n`{a}`')
+       except Exception as a:
+          await f.send_message(message.chat.id, f'**ERROR!!**\n`{a}`')
+          return
 
 
 
