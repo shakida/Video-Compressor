@@ -27,21 +27,21 @@ async def live(s: shakida, message: Message):
        try:
           tempid = uuid.uuid4()
           videos = message.reply_to_message
+          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
           crf = 27
-          if videos.video or videos.document:
-             f = await s.send_message(message.chat.id, f'📥 **Downloading..**')
-          if len(message.command) != 2:
-             crf = int(message.text.split(None, 1)[1])
+          crf = int(message.text.split(None, 1)[1])
           if (crf < 20) or (crf > 50):
              f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
-             return  
+             return
+          if videos.video or videos.document:
+             f.edit(f'📥 **Downloading..**') 
           try:
              video = await s.download_media(videos)
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
-             await f.edit(f'**🗜️ Compressing...**')
+             await f.edit(f'**🗜️ Compressing...**\nCRF: {crf}')
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
