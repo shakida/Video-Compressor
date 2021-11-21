@@ -23,18 +23,20 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 
 
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
-async def live(s: shakida, message: Message):
+async def compox(s: shakida, message: Message):
        try:
           tempid = uuid.uuid4()
           videos = message.reply_to_message
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          crf = 27
-          crf = int(message.text.split(None, 1)[1])
+          if len(message.command) != 1:
+             crf = 27
+          if len(message.command) != 2:
+             crf = int(message.text.split(None, 1)[1])
           if (crf < 20) or (crf > 50):
-             f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
+             await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
           if videos.video or videos.document:
-             f.edit(f'📥 **Downloading..**') 
+             await f.edit(f'📥 **Downloading..**') 
           try:
              video = await s.download_media(videos)
           except Exception as e:
