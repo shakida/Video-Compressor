@@ -44,10 +44,11 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
-       #   if videos.video or videos.document:
-             await f.edit(f'📥 **Downloading..**') 
+       
           try:
-             video = await s.download_media(videos)
+             if videos.video or videos.document:
+               await f.edit(f'📥 **Downloading..**')
+               video = await s.download_media(videos)
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
