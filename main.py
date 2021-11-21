@@ -35,7 +35,7 @@ async def compox(s: shakida, message: Message):
           videos = message.reply_to_message
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
           if not videos.video or videos.document:
-             await f.edit(f'No videos provided')
+             await f.edit(f'**No videos provided!**')
              return
           if len(message.command) != 2:
              crf = 27
