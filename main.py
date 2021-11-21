@@ -34,6 +34,9 @@ async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           videos = message.reply_to_message
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
+          if not videos.video or videos.document:
+             await f.edit(f'No videos provided')
+             return
           if len(message.command) != 2:
              crf = 27
           if len(message.command) == 2:
@@ -41,7 +44,7 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
-          if videos.video or videos.document:
+       #   if videos.video or videos.document:
              await f.edit(f'📥 **Downloading..**') 
           try:
              video = await s.download_media(videos)
