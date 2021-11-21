@@ -27,26 +27,30 @@ async def live(s: shakida, message: Message):
        try:
           tempid = uuid.uuid4()
           videos = message.reply_to_message
+          crf = 27
           if videos.video or videos.document:
              f = await s.send_message(message.chat.id, f'📥 **Downloading..**')
+          if len(message.command) != 2:
+             crf = int(message.text.split(None, 1)[1])
+          if (crf < 20) or (crf > 50):
+             f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
+             return  
           try:
              video = await s.download_media(videos)
-         #   os.system(f'ffmpeg -i "{video}" -vn -f s16le -ac 2 -ar 48000 -acodec pcm_s16le VID-{}.raw -y')
-        #    audio = f'VID-{message.chat.id}.raw'
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
              await f.edit(f'**🗜️ Compressing...**')
              proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf 27 "VID-{tempid}.mkv" -y',
+             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
              await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
-             await message.reply_document(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
+             await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              os.remove(video)
              await f.delete()
