@@ -46,7 +46,7 @@ async def live(s: shakida, message: Message):
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
              await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
-             await s.send_video(message.chat.id, out, caption=f'✅ UPLOADED SUCCESSFULLY.\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
+             await message.reply_document(message.chat.id, document=out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` CRF: `27` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              os.remove(video)
              await f.delete()
