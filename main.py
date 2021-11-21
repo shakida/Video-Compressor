@@ -60,12 +60,14 @@ async def compox(s: shakida, message: Message):
              )
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
+             os.remove(video)
              await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
              await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
-             os.remove(video)
+             
              await f.delete()
           except Exception as a:
+             os.remove(video)
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
 
