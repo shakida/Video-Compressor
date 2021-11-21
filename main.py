@@ -33,10 +33,10 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           videos = message.reply_to_message
-          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          if not videos.video or videos.document or message.reply_to_message:
-             await f.edit(f'**No videos provided!**')
+          if not videos.video or videos.document:
+             await s.send_message(message.chat.id, f'**No videos provided!**')
              return
+          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
           if len(message.command) != 2:
              crf = 27
           if len(message.command) == 2:
