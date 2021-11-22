@@ -56,7 +56,7 @@ async def compox(s: shakida, message: Message):
              return
           try:
              but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {video}|{crf}|{any}),
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {video}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
              await f.edit(f'**🏷️ {video}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
