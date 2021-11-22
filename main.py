@@ -34,7 +34,7 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
-          videos = message.reply_to_message
+          videos = (message.reply_to_message.video or message.reply_to_message.document) if message.reply_to_message else None
           any = message.from_user.id
           if not videos.video or videos.document:
              await s.send_message(message.chat.id, f'**No videos provided!**')
@@ -50,7 +50,7 @@ async def compox(s: shakida, message: Message):
        
           try:
              if videos.video or videos.document:
-               file_n = videos.file_name
+               file_n = videos.video.file_name
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
                video = await s.download_media(videos)
                
