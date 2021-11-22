@@ -53,7 +53,7 @@ async def compox(s: shakida, message: Message):
                file_n = videos.video.file_name
                uid = videos.video.file_unique_id
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
-               video = await s.download_media(lol, videos)
+               video = await s.download_media(videos, file_name=f'lol.mp4')
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
