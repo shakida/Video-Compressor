@@ -51,15 +51,16 @@ async def compox(s: shakida, message: Message):
              if videos.video or videos.document:
                await f.edit(f'**🏷️{videos}**\n📥 **Downloading..**')
                video = await s.download_media(videos)
+               vix = video.file_name
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
              but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {video}|{crf}|{any}'),
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {vix}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
-             await f.edit(f'**🏷️ {video}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
+             await f.edit(f'**🏷️ {vix}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -85,7 +86,7 @@ async def callb(shakida, cb):
     chet_id = cb.message.chat.id
     cbd = cb.data.strip()
     try:
-       video, crf, any= typed_.split("|")
+       vix, crf, any= typed_.split("|")
     except Exception as e:
        print(e)
        return
@@ -97,8 +98,8 @@ async def callb(shakida, cb):
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
-       os.remove(video)
-       await cb.message.edit(f'**🏷️ {video}**\n**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
+       os.remove(vix)
+       await cb.message.edit(f'**🏷️ {vix}**\n**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
