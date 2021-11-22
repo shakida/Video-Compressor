@@ -30,7 +30,7 @@ shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 
 def get_file_name(video: Union[video, document]):
-    return f'{video.file_unique_id}.{video.file_name.split(".")[-1] if not isinstance(video, document) else "ogg"}'
+    return f'{video.file_unique_id}.{video.file_name.split(".")[-1] if not isinstance(video, document) else "raw"}'
 
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
