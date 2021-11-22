@@ -29,9 +29,6 @@ shakida = Client(
 shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 
-def get_file_name(video: Union[video, document]):
-    return f'{video.file_unique_id}.{video.file_name.split(".")[-1] if not isinstance(video, document) else "raw"}'
-
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
@@ -54,8 +51,8 @@ async def compox(s: shakida, message: Message):
                file_n = video.video.file_name
                
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
-               file = await get_file_name(video)
-               videox = await s.download_media(file)
+               file = f'{video.file_unique_id}.{video.file_name.split(".")[-1]}'
+               videox = await video.download(file)
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
@@ -74,7 +71,7 @@ async def compox(s: shakida, message: Message):
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
              os.remove(video)
-             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
+             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**')
              await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              
