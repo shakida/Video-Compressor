@@ -35,7 +35,7 @@ def get_file_name(video: Union[video, document]):
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
-          videos = message.reply_to_message
+          video = message.reply_to_message
           any = message.from_user.id
           if not videos.video or videos.document:
              await s.send_message(message.chat.id, f'**No videos provided!**')
@@ -50,12 +50,12 @@ async def compox(s: shakida, message: Message):
              return
        
           try:
-             if videos.video or videos.document:
-               file_n = videos.video.file_name
+             if video.video or videos.document:
+               file_n = video.video.file_name
                
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
-               file = await get_file_name(videos)
-               video = await s.download_media(file)
+               file = await get_file_name(video)
+               videox = await s.download_media(file)
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
@@ -67,7 +67,7 @@ async def compox(s: shakida, message: Message):
                 ]])
              await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
+             f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
