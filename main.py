@@ -29,7 +29,8 @@ shakida = Client(
 shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 
-
+def get_file_name(video: Union[video, document]):
+    return f'{video.file_unique_id}.{video.file_name.split(".")[-1] if not isinstance(video, document) else "ogg"}'
 
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
@@ -51,19 +52,20 @@ async def compox(s: shakida, message: Message):
           try:
              if videos.video or videos.document:
                file_n = videos.video.file_name
-               uid = videos.video.file_unique_id
+               
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
-               video = await s.download_media(videos, file_name=f'lol.mp4')
+               file = await get_file_name(videos)
+               video = await s.download_media(file)
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
              but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {lol}|{crf}|{any}'),
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
-             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -89,7 +91,7 @@ async def callb(shakida, cb):
     chet_id = cb.message.chat.id
     cbd = cb.data.strip()
     try:
-       uid, crf, any= typed_.split("|")
+       file, crf, any= typed_.split("|")
     except Exception as e:
        print(e)
        return
@@ -101,8 +103,8 @@ async def callb(shakida, cb):
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
-       os.remove(f'downloads/{uid}.mp4')
-       await cb.message.edit(f'**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
+       os.remove(f'downloads/{file}')
+       await cb.message.edit(f'**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {crf}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
