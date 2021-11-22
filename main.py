@@ -11,6 +11,7 @@ import subprocess
 import asyncio
 import wget
 from datetime import datetime
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 import psutil
 from psutil._common import bytes2human
 self_or_contact_filter = filters.create(
@@ -33,6 +34,7 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           videos = message.reply_to_message
+          any = message.from_user.id
           if not videos.video or videos.document:
              await s.send_message(message.chat.id, f'**No videos provided!**')
              return
@@ -47,13 +49,17 @@ async def compox(s: shakida, message: Message):
        
           try:
              if videos.video or videos.document:
-               await f.edit(f'📥 **Downloading..**')
+               await f.edit(f'**🏷️{videos}**\n📥 **Downloading..**')
                video = await s.download_media(videos)
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
-             await f.edit(f'**🗜️ Compressing...**\nCRF: {crf}')
+             but = InlineKeyboardMarkup([[
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {video}|{crf}|{any}),
+                InlineKeyboardButton("⚙️ Status", "sys"),
+                ]])
+             await f.edit(f'**🏷️ {video}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -72,8 +78,30 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
 
-
-
+@shakida.on_callback_query(
+    filters.regex(pattern=r"^(cl)$")
+)
+async def callb(shakida, cb):
+    chet_id = cb.message.chat.id
+    cbd = cb.data.strip()
+    try:
+       video, crf, any= typed_.split("|")
+    except Exception as e:
+       print(e)
+       return
+    sudo = int(875645659)
+    useer_id = int(any)
+    if cb.from_user.id != sudo:
+        print('not sudo')    
+    elif cb.from_user.id != useer_id:
+        await cb.answer("❌ Not for you.", show_alert=True)
+        return
+    try:
+       os.remove(video)
+       await cb.message.edit(f'**🏷️ {video}**\n**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
+    except Exception as e:
+       await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
+       return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
     cmd = message.text.split(' ', 1)
