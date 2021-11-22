@@ -8,6 +8,7 @@ import pyrogram
 from os import path
 import uuid
 import subprocess
+from typing import Union
 import asyncio
 import wget
 from datetime import datetime
@@ -49,18 +50,19 @@ async def compox(s: shakida, message: Message):
        
           try:
              if videos.video or videos.document:
-               await f.edit(f'**🏷️{videos}**\n📥 **Downloading..**')
+               file_n = videos.file_name
+               await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
                video = await s.download_media(videos)
-               vix = video.file_name
+               
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
              but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {vix}|{crf}|{any}'),
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file_n}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
-             await f.edit(f'**🏷️ {vix}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{video}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -69,7 +71,7 @@ async def compox(s: shakida, message: Message):
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
              os.remove(video)
-             await f.edit(f'**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
+             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n`File Uploading...`')
              await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              
@@ -86,7 +88,7 @@ async def callb(shakida, cb):
     chet_id = cb.message.chat.id
     cbd = cb.data.strip()
     try:
-       vix, crf, any= typed_.split("|")
+       file_n, crf, any= typed_.split("|")
     except Exception as e:
        print(e)
        return
@@ -98,8 +100,8 @@ async def callb(shakida, cb):
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
-       os.remove(vix)
-       await cb.message.edit(f'**🏷️ {vix}**\n**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
+       os.remove(f'downloads/{file_n}')
+       await cb.message.edit(f'**🏷️ {file_n}**\n**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {CRF}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
