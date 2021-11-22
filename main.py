@@ -53,14 +53,14 @@ async def compox(s: shakida, message: Message):
                file_n = videos.video.file_name
                uid = videos.video.file_unique_id
                await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
-               video = await s.download_media(f'file_name={uid}', videos)
+               video = await s.download_media(lol, videos)
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
              but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {uid}|{crf}|{any}'),
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {lol}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
              await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range**: `{crf}`', reply_markup=but)
