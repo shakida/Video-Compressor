@@ -60,7 +60,7 @@ async def compox(s: shakida, message: Message):
              videox = await video.download(file)
           if not video.video or video.document:
            try:
-             file_n = video
+             file_n = url
              ff = file_n.split(".")
              x = len(ff)
              xt = x-1
@@ -75,10 +75,10 @@ async def compox(s: shakida, message: Message):
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
            except Exception as e:
-             await f.edit(f'ERROR‼️: LINK ERROR.\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
+             await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
 
-          try:
+           try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
@@ -100,7 +100,7 @@ async def compox(s: shakida, message: Message):
              os.remove(f'{file}')
              temp.pop(0)
              await f.delete()
-          except Exception as a:
+           except Exception as a:
              os.remove(videox)
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
