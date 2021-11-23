@@ -31,13 +31,13 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
-          global temp
-          tempid = uuid.uuid4()
-          video = message.reply_to_message
-          any = message.from_user.id
+       global temp
+       tempid = uuid.uuid4()
+       video = message.reply_to_message
+       any = message.from_user.id
          # crf = 27
+       f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
        try:
-          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
           if not video.video or video.document:
              url = video.text
              await f.edit(f'**🔄 Prosesing**\n**🏷️ {url}')
@@ -55,7 +55,8 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
-             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
+             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
+             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=butt)
              videox = await video.download(file)
           if not video.video or video.document:
            try:
@@ -70,7 +71,8 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
-             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
+             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
+             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
            except Exception as e:
              await f.edit(f'ERROR‼️: LINK ERROR.\n`{e}`')
@@ -81,7 +83,8 @@ async def compox(s: shakida, message: Message):
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                 ]])
-             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
+             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -90,7 +93,8 @@ async def compox(s: shakida, message: Message):
              await proc.communicate()
              out = f"{file}"
              os.remove(videox)
-             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
+             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=but)
              await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`'
                + f'**🍻 CC:** {message.from_user.mention()}')
              os.remove(f'{file}')
@@ -104,7 +108,7 @@ async def compox(s: shakida, message: Message):
        except Exception as a:
              await f.edit(f'**Prosess error:** `{a}`')
              return
-
+             
 @shakida.on_callback_query(
     filters.regex(pattern=r"cl")
 )
@@ -135,7 +139,8 @@ async def callb(shakida, cb):
        except:
           pass
        temp.pop(0)
-       await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}')
+       await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}\n'
+       + f'**🍻 CC:** {cb.from_user.mention()')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
