@@ -28,7 +28,7 @@ shakida = Client(
     bot_token='1851824879:AAHu_kSVPmJusQOVGE9y_f7RLcMoym_jgwg')
 shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
-
+temp = []
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
@@ -45,39 +45,40 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
-       
+          but = InlineKeyboardMarkup([[
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
+                InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+                ]])
           try:
              if video.video or video.document:
                file_n = video.video.file_name
-               
-               await f.edit(f'**🏷️ {file_n}**\n📥 **Downloading..**')
+               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=but)
                file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
+               for x in file:
+               temp.append(x)
                videox = await video.download(file)
                
           except Exception as e:
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
-             but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
-                InlineKeyboardButton("⚙️ Status", "sys"),
-                ]])
              await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n{file}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
+             f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
              await proc.communicate()
-             out = f"VID-{tempid}.mkv"
+             out = f"{file}"
              os.remove(videox)
-             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**')
+             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**', reply_markup=but)
              await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG` **🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`')
-             os.remove(f'VID-{tempid}.mkv')
-             
+             os.remove(f'{file}')
+             temp.pop(0)
              await f.delete()
           except Exception as a:
              os.remove(videox)
+             temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
 
@@ -86,6 +87,7 @@ async def compox(s: shakida, message: Message):
 )
 async def callb(shakida, cb):
  #   chet_id = cb.message.chat.id
+    global temp
     cbd = cb.data.strip()
     typed_=cbd.split(None, 1)[1]
     try:
@@ -93,19 +95,38 @@ async def callb(shakida, cb):
     except Exception as e:
        print(e)
        return
-   # sudo = int(875645659)
+    sudo = int(875645659)
     useer_id = int(any)
-  #  if cb.from_user.id != sudo:
-  #      print('not sudo')    
-   # elif cb.from_user.id != useer_id:
-   #     await cb.answer("❌ Not for you.", show_alert=True)
-  #      return
+    if cb.from_user.id != sudo:
+        print('not sudo')    
+    elif cb.from_user.id != useer_id:
+        await cb.answer("❌ Not for you.", show_alert=True)
+        return
     try:
+       temp.pop(0)
        os.remove(f'downloads/{file}')
-       await cb.message.edit(f'**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {crf}')
+       try:
+          os.remove(f'{file}')
+       except
+          pass
+       await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
+@shakida.on_callback_query(filters.regex(pattern=r"^(sys)$"))
+async def cls(b, cb):
+     global temp
+     li = len(temp)
+     list = li+1
+     type_ = cb.matches[0].group(1)
+   #   the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
+   #  by = cb.from_user.first_name
+   #  userr = cb.from_user.id
+     if type_ == "sys":
+      #    await cb.answer(f"❌ Close by {by}")
+      #    LOGGER.warning("Close button executed")
+          await cb.answer("💡 Operation status: {list} ", show_alert=True)
+     return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
     cmd = message.text.split(' ', 1)
