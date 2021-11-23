@@ -46,17 +46,18 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
-          but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
-                InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
-                ]])
+ 
           try:
              if video.video or video.document:
                file_n = video.video.file_name
                file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
+               but = InlineKeyboardMarkup([[
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
+                InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+                ]])
+               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=but)
                for x in file:
                  temp.append(x)
-               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=but)
                videox = await video.download(file)
                
           except Exception as e:
