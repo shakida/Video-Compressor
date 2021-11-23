@@ -40,7 +40,7 @@ async def compox(s: shakida, message: Message):
           if len(message.command) == 3:
                crf = int(message.text.split(None,1)[1])
                url = str(message.text.split(None,2)[2])
-          if len(message.command) == 2:
+          elif len(message.command) == 2:
              crf = int(message.text.split(None, 1)[1])
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
@@ -54,7 +54,7 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = await video.download(file)
-          elif not video.video or video.document:
+          elif url:
            try:
              file_n = url
              ff = file_n.split(".")
