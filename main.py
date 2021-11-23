@@ -85,7 +85,7 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
            except Exception as e:
-             await f.edit(f'ERROR‼️: LINK ERROR.\n`{e}`)
+             await f.edit(f'ERROR‼️: LINK ERROR.\n`{e}`')
              return
 
           try:
