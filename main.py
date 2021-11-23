@@ -36,6 +36,7 @@ async def compox(s: shakida, message: Message):
           video = message.reply_to_message
           any = message.from_user.id
          # crf = 27
+       try:
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
           if not video.video or video.document:
             url = video
@@ -98,6 +99,9 @@ async def compox(s: shakida, message: Message):
              os.remove(videox)
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
+             return
+       except Exception as a:
+             await f.edit(f'**Prosess error:** `{a}`')
              return
 
 @shakida.on_callback_query(
