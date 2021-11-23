@@ -55,7 +55,7 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
                await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
-               dc = video.dc_id
+               dc = video.from_user.dc_id
                for x in dc:
                  temp.append(x)
                videox = await video.download(file)
