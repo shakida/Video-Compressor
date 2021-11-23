@@ -72,7 +72,7 @@ async def compox(s: shakida, message: Message):
              out = f"VID-{tempid}.mkv"
              os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**')
-             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG` **🚦 Preset: `Ultrafast`\n**⚙️ CRF: `{crf}`\n**📺 Quality: `Standard`')
+             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG` **🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              
              await f.delete()
@@ -82,7 +82,7 @@ async def compox(s: shakida, message: Message):
              return
 
 @shakida.on_callback_query(
-    filters.regex(pattern=r"^(cl)$")
+    filters.regex(pattern=r"cl")
 )
 async def callb(shakida, cb):
  #   chet_id = cb.message.chat.id
