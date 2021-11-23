@@ -62,7 +62,7 @@ async def compox(s: shakida, message: Message):
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", "sys"),
                 ]])
-             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n{file}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "VID-{tempid}.mkv" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -70,14 +70,14 @@ async def compox(s: shakida, message: Message):
              )
              await proc.communicate()
              out = f"VID-{tempid}.mkv"
-             os.remove(video)
+             os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**')
              await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              
              await f.delete()
           except Exception as a:
-             os.remove(video)
+             os.remove(videox)
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
 
