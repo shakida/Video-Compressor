@@ -35,28 +35,13 @@ async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           video = message.reply_to_message
           any = message.from_user.id
+          crf = 27
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          
           if len(message.command) == 3:
-            try:
-               crf = int(message.text.split(None, 1)[1])
-            except Exception as e:
-               await f.edit(f'FORMET ERROR‼️:\nUse `/compo CRF[20-50] URL[Direct video link]')
-               return
-            try:
+               crf = int(message.text.split(None,1)[1])
                url = str(message.text.split(None,2)[2])
-            except Exception as e:
-               await f.edit(f'FORMET ERROR‼️:\nUse `/compo CRF[20-50] URL[Direct video link]')
-               return
-          if len(message.command) != 2:
-             crf = 27
           if len(message.command) == 2:
-             try:
-                crf = int(message.text.split(None, 1)[1])
-             except:
-                pass
-             url = str(message.text.split(None, 1)[1])
-             crf = 27
+             crf = int(message.text.split(None, 1)[1])
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
