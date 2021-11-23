@@ -114,7 +114,7 @@ async def callb(shakida, cb):
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
 @shakida.on_callback_query(filters.regex(pattern=r"^(sys)$"))
-async def cls(b, cb):
+async def sya(shakida, cb):
      global temp
      li = len(temp)
      list = li+1
@@ -125,7 +125,7 @@ async def cls(b, cb):
      if type_ == "sys":
       #    await cb.answer(f"❌ Close by {by}")
       #    LOGGER.warning("Close button executed")
-          await cb.answer("💡 Operation status: {list} ", show_alert=True)
+          await cb.answer(f"💡 Operation status: #{list}", show_alert=True)
      return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
