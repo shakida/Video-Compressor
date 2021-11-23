@@ -57,7 +57,11 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
-             videox = await video.download(file)
+             try:
+                videox = await video.download(file)
+             except:
+                temp.pop(0)
+                return
           if not video.video or video.document:
            try:
              file_n = url
@@ -79,7 +83,11 @@ async def compox(s: shakida, message: Message):
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
-             await lol.communicate()
+             try:
+                await lol.communicate()
+             except:
+                temp.pop(0)
+                return
         #     videox = wget.download(file_n, out=putt)
            except Exception as e:
              temp.pop(0)
