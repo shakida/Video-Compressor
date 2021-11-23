@@ -140,7 +140,7 @@ async def callb(shakida, cb):
           pass
        temp.pop(0)
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}\n'
-       + f'**🍻 CC:** {cb.from_user.mention()')
+       + f'**🍻 CC:** {cb.from_user.mention()}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
