@@ -77,7 +77,8 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
-             cmd = f'wget -U 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4' -O {file} -p {putt} {file_n}'
+             ag = f'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4'
+             cmd = f'wget -U {ag} -O {file} -p {putt} {file_n}'
              lol = await asyncio.create_subprocess_shell(
              f'{cmd}',
              stdout=asyncio.subprocess.PIPE,
