@@ -66,7 +66,7 @@ async def compox(s: shakida, message: Message):
              xt = x-1
              gg = file_n.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
-             putt = f'downloads'
+             putt = f'downloads/{file}'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
@@ -75,6 +75,7 @@ async def compox(s: shakida, message: Message):
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
            except Exception as e:
+             temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
 
