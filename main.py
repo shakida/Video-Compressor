@@ -36,11 +36,8 @@ async def compox(s: shakida, message: Message):
           video = message.reply_to_message
           any = message.from_user.id
           crf = 27
-          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          if len(message.command) == 3:
-             crf = int(message.text.split(None)[1])
-             url = str(message.text.split(None)[2])
-          elif len(message.command) == 2:
+          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**"
+          if len(message.command) == 2:
              crf = int(message.text.split(None)[1])
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
@@ -54,9 +51,9 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = await video.download(file)
-          elif not video.video or video.document:
+          if not video.video or video.document:
            try:
-             file_n = url
+             file_n = video
              ff = file_n.split(".")
              x = len(ff)
              xt = x-1
