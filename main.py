@@ -51,12 +51,12 @@ async def compox(s: shakida, message: Message):
              if video.video or video.document:
                file_n = video.video.file_name
                file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
-               but = InlineKeyboardMarkup([[
-                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
-                InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
-                ]])
-               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=but)
-               for x in file:
+               butt = InlineKeyboardMarkup([[
+                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+               ]])
+               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
+               ll = 1
+               for x in ll:
                  temp.append(x)
                videox = await video.download(file)
                
@@ -64,6 +64,10 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'**ERROR!:**\n`{e}`')
              return
           try:
+             but = InlineKeyboardMarkup([[
+                InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
+                InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+                ]])
              await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n{file}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
@@ -74,7 +78,7 @@ async def compox(s: shakida, message: Message):
              out = f"{file}"
              os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**', reply_markup=but)
-             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG` **🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`')
+             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`')
              os.remove(f'{file}')
              temp.pop(0)
              await f.delete()
@@ -105,8 +109,14 @@ async def callb(shakida, cb):
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
-       temp.pop(0)
-       os.remove(f'downloads/{file}')
+       try:
+          temp.pop(0)
+       except:
+          pass
+       try:
+          os.remove(f'downloads/{file}')
+       except:
+          pass
        try:
           os.remove(f'{file}')
        except:
