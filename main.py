@@ -31,6 +31,7 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
+          global temp
           tempid = uuid.uuid4()
           video = message.reply_to_message
           any = message.from_user.id
