@@ -72,7 +72,7 @@ async def compox(s: shakida, message: Message):
              out = f"VID-{tempid}.mkv"
              os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**')
-             await videos.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
+             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\nEngine: `FFMAPG` Preset: `Ultrafast` *CRF: `{crf}` Quality: `Standard`')
              os.remove(f'VID-{tempid}.mkv')
              
              await f.delete()
@@ -94,11 +94,11 @@ async def callb(shakida, cb):
        return
     sudo = int(875645659)
     useer_id = int(any)
-    if cb.from_user.id != sudo:
-        print('not sudo')    
-    elif cb.from_user.id != useer_id:
-        await cb.answer("❌ Not for you.", show_alert=True)
-        return
+  #  if cb.from_user.id != sudo:
+  #      print('not sudo')    
+  #  elif cb.from_user.id != useer_id:
+  #      await cb.answer("❌ Not for you.", show_alert=True)
+  #      return
     try:
        os.remove(f'downloads/{file}')
        await cb.message.edit(f'**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {crf}')
