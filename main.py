@@ -87,6 +87,7 @@ async def compox(s: shakida, message: Message):
 async def callb(shakida, cb):
     chet_id = cb.message.chat.id
     cbd = cb.data.strip()
+    typed_=cbd.split(None, 1)[1]
     try:
        file, crf, any= typed_.split("|")
     except Exception as e:
@@ -94,11 +95,11 @@ async def callb(shakida, cb):
        return
     sudo = int(875645659)
     useer_id = int(any)
-  #  if cb.from_user.id != sudo:
-  #      print('not sudo')    
-  #  elif cb.from_user.id != useer_id:
-  #      await cb.answer("❌ Not for you.", show_alert=True)
-  #      return
+    if cb.from_user.id != sudo:
+        print('not sudo')    
+    elif cb.from_user.id != useer_id:
+        await cb.answer("❌ Not for you.", show_alert=True)
+        return
     try:
        os.remove(f'downloads/{file}')
        await cb.message.edit(f'**❌ STOPPED COMPRESSION**\n**⚙️ CRF RANGE:** {crf}')
