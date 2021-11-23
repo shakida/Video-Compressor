@@ -19,7 +19,7 @@ self_or_contact_filter = filters.create(
     lambda _, __, message: (message.from_user and message.from_user.is_contact)
     or message.outgoing
 )
-
+import wget
 
 shakida = Client(
     ":memory:",
@@ -35,10 +35,10 @@ async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           video = message.reply_to_message
           any = message.from_user.id
-          if not video.video or video.document:
-             await s.send_message(message.chat.id, f'**No videos provided!**')
-             return
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
+          if len(message.command) == 3:
+             crf = int(message.text.split(None, 1)[1])
+             url = str(message.text.split(None,2)[2])
           if len(message.command) != 2:
              crf = 27
           if len(message.command) == 2:
@@ -46,29 +46,35 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
- 
-          try:
-             if video.video or video.document:
-               file_n = video.video.file_name
-               file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
-               butt = InlineKeyboardMarkup([[
+          if video.video or video.document:
+             file_n = video.video.file_name
+             file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
+             butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
-               await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
-            #   dc = video.from_user.dc_id
-               for x in file:
-                 temp.append(str(x))
-               videox = await video.download(file)
-               
-          except Exception as e:
-             await f.edit(f'**ERROR!:**\n`{e}`')
-             return
+             temp.append(str(file))
+             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
+             videox = await video.download(file)
+          elif not video.video or video.document:
+             file_n = url
+             ff = file_n.split(".")
+             x = len(ff)
+             xt = x-1
+             gg = file_n.split(".")[xt]
+             file = f'fuckyoubaby.{gg}'
+             putt = f'downloads'
+             butt = InlineKeyboardMarkup([[
+                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+               ]])
+             temp.append(str(file))
+             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
+             videox = wget.download(file_n, out=putt)
           try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                 ]])
-             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n{file}', reply_markup=but)
+             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -110,10 +116,6 @@ async def callb(shakida, cb):
         return
     try:
        try:
-          temp.pop(0)
-       except:
-          pass
-       try:
           os.remove(f'downloads/{file}')
        except:
           pass
@@ -121,6 +123,7 @@ async def callb(shakida, cb):
           os.remove(f'{file}')
        except:
           pass
+       temp.pop(0)
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}')
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
@@ -128,8 +131,7 @@ async def callb(shakida, cb):
 @shakida.on_callback_query(filters.regex(pattern=r"^(sys)$"))
 async def sya(shakida, cb):
      global temp
-     li = len(temp)
-     list = li+1
+     list = len(temp)
      type_ = cb.matches[0].group(1)
    #   the_data = cb.message.reply_markup.inline_keyboard[1][0].callback_data
    #  by = cb.from_user.first_name
@@ -137,7 +139,7 @@ async def sya(shakida, cb):
      if type_ == "sys":
       #    await cb.answer(f"❌ Close by {by}")
       #    LOGGER.warning("Close button executed")
-          await cb.answer(f"💡 Operation status: #{list}", show_alert=True)
+          await cb.answer(f"💡 OPERATION STATUS: {list}", show_alert=True)
      return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
