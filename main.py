@@ -56,7 +56,7 @@ async def compox(s: shakida, message: Message):
                ]])
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
-             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=butt)
+             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              videox = await video.download(file)
           if not video.video or video.document:
            try:
@@ -72,10 +72,10 @@ async def compox(s: shakida, message: Message):
                ]])
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
-             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=butt)
+             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
            except Exception as e:
-             await f.edit(f'ERROR‼️: LINK ERROR.\n`{e}`')
+             await f.edit(f'ERROR‼️: LINK ERROR.\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
 
           try:
@@ -84,7 +84,7 @@ async def compox(s: shakida, message: Message):
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                 ]])
              await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
-             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=but)
+             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
              stdout=asyncio.subprocess.PIPE,
@@ -94,7 +94,7 @@ async def compox(s: shakida, message: Message):
              out = f"{file}"
              os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
-             + f'**🍻 CC:** {message.from_user.frist_name}', reply_markup=but)
+             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
              await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`'
                + f'**🍻 CC:** {message.from_user.mention()}')
              os.remove(f'{file}')
@@ -106,7 +106,7 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
        except Exception as a:
-             await f.edit(f'**Prosess error:** `{a}`')
+             await f.edit(f'**PROSESS ERROR ‼️:** `{a}`')
              return
              
 @shakida.on_callback_query(
