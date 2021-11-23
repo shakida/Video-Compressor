@@ -36,13 +36,27 @@ async def compox(s: shakida, message: Message):
           video = message.reply_to_message
           any = message.from_user.id
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
+          
           if len(message.command) == 3:
-             crf = int(message.text.split(None, 1)[1])
-             url = str(message.text.split(None,2)[2])
+            try:
+               crf = int(message.text.split(None, 1)[1])
+            except Exception as e:
+               await f.edit(f'FORMET ERROR‼️:\nUse `/compo CRF[20-50] URL[Direct video link]')
+               return
+            try:
+               url = str(message.text.split(None,2)[2])
+            except Exception as e:
+               await f.edit(f'FORMET ERROR‼️:\nUse `/compo CRF[20-50] URL[Direct video link]')
+               return
           if len(message.command) != 2:
              crf = 27
           if len(message.command) == 2:
-             crf = int(message.text.split(None, 1)[1])
+             try:
+                crf = int(message.text.split(None, 1)[1])
+             except:
+                pass
+             url = str(message.text.split(None, 1)[1])
+             crf = 27
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
@@ -56,6 +70,7 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = await video.download(file)
           elif not video.video or video.document:
+           try:
              file_n = url
              ff = file_n.split(".")
              x = len(ff)
@@ -69,6 +84,10 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = wget.download(file_n, out=putt)
+           except Exception as e:
+             await f.edit(f'ERROR‼️: LINK ERROR.\n`{e}`)
+             return
+
           try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
