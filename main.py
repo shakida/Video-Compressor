@@ -37,7 +37,7 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          if not videos.video or videos.document:
+          if not video.video or video.document:
             url = video
             await f.edit(f'**🔄 Prosesing**\n**🏷️ {url}')
           if len(message.command) != 2:
