@@ -70,7 +70,7 @@ async def compox(s: shakida, message: Message):
              xt = x-1
              gg = file_n.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
-             putt = f'downloads/'
+             putt = f'downloads/{file}'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
