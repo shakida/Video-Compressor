@@ -66,19 +66,26 @@ async def compox(s: shakida, message: Message):
              xt = x-1
              gg = file_n.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
-             putt = f'downloads/{file}'
+             putt = f'downloads/'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
-             videox = wget.download(file_n, out=putt)
+             cmd = f'wget -U 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.8.1.6) Gecko/20070802 SeaMonkey/1.1.4' -O {file} -p {putt} {file_n}'
+             lol = await asyncio.create_subprocess_shell(
+             f'{cmd}',
+             stdout=asyncio.subprocess.PIPE,
+             stderr=asyncio.subprocess.PIPE,
+             )
+             await lol.communicate()
+        #     videox = wget.download(file_n, out=putt)
            except Exception as e:
              temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
-
+          if video.video or video.document:
            try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
@@ -96,7 +103,7 @@ async def compox(s: shakida, message: Message):
              os.remove(videox)
              await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`'
+             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
                + f'**🍻 CC:** {message.from_user.mention()}')
              os.remove(f'{file}')
              temp.pop(0)
