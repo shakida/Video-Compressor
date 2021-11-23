@@ -108,7 +108,7 @@ async def callb(shakida, cb):
        os.remove(f'downloads/{file}')
        try:
           os.remove(f'{file}')
-       except
+       except:
           pass
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}')
     except Exception as e:
