@@ -35,8 +35,10 @@ async def compox(s: shakida, message: Message):
           tempid = uuid.uuid4()
           video = message.reply_to_message
           any = message.from_user.id
-          crf = 27
+         # crf = 27
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**"
+          if len(message.command) != 2:
+             crf = 27
           if len(message.command) == 2:
              crf = int(message.text.split(None)[1])
           if (crf < 20) or (crf > 50):
