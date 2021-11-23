@@ -56,7 +56,7 @@ async def compox(s: shakida, message: Message):
                await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=but)
                file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
                for x in file:
-               temp.append(x)
+                 temp.append(x)
                videox = await video.download(file)
                
           except Exception as e:
