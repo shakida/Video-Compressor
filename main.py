@@ -155,7 +155,7 @@ async def sya(shakida, cb):
      if type_ == "sys":
       #    await cb.answer(f"❌ Close by {by}")
       #    LOGGER.warning("Close button executed")
-          await cb.answer(f"💡 OPERATION STATUS: {list}", show_alert=True)
+          await cb.answer(f"💡 OPERATION STATUS:\n\n🗜️ {list} Operation Running 🟢", show_alert=True)
      return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
