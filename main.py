@@ -54,7 +54,7 @@ async def compox(s: shakida, message: Message):
              temp.append(str(file))
              await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**', reply_markup=butt)
              videox = await video.download(file)
-          elif url:
+          elif not video.video or video.document:
            try:
              file_n = url
              ff = file_n.split(".")
