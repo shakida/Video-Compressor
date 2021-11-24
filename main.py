@@ -78,17 +78,20 @@ async def compox(s: shakida, message: Message):
              
              await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
+             """
              ag = f"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
+             
              cmd = f'wget -O {putt} {file_n}'
              lol = await asyncio.create_subprocess_shell(
              f'{cmd}',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
+             """
              videox = putt
              try:
                 temp.append(str(file))
-                await lol.communicate()
+                wget.download(file_n, out=putt)
              except Exception as x:
                 temp.pop(0)
                 await f.edit(f'error: {x}')
