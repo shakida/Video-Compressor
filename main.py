@@ -50,7 +50,8 @@ async def compox(s: shakida, message: Message):
              return
           if video.video or video.document:
              file_n = video.video.file_name
-             file = f'{video.video.file_unique_id}.{video.video.file_name.split(".")[-1]}'
+             ch = f'video.video.mime_type.split('/')[1]'
+             file = f'{video.video.file_unique_id}.{ch}'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
@@ -74,7 +75,7 @@ async def compox(s: shakida, message: Message):
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
-             temp.append(str(file))
+             
              await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              ag = f"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
@@ -86,6 +87,7 @@ async def compox(s: shakida, message: Message):
              )
              videox = putt
              try:
+                temp.append(str(file))
                 await lol.communicate()
              except Exception as x:
                 temp.pop(0)
