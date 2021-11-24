@@ -50,7 +50,7 @@ async def compox(s: shakida, message: Message):
              return
           if video.video or video.document:
              file_n = video.video.file_name
-             ch = f'video.video.mime_type.split('/')[1]'
+             ch = video.video.mime_type.split('/')[1]
              file = f'{video.video.file_unique_id}.{ch}'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
