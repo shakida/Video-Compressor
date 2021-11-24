@@ -84,6 +84,7 @@ async def compox(s: shakida, message: Message):
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
+             videox = putt
              try:
                 await lol.communicate()
              except Exception as x:
