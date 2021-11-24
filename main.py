@@ -31,13 +31,13 @@ shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
-       global temp
-       tempid = uuid.uuid4()
-       video = message.reply_to_message
-       any = message.from_user.id
+          global temp
+          tempid = uuid.uuid4()
+          video = message.reply_to_message
+          any = message.from_user.id
          # crf = 27
-       f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-       try:
+          f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
+   #    try:
           if not video.video or video.document:
              url = video.text
              await f.edit(f'**🔄 Prosesing**\n**🏷️`{url}`')
@@ -127,9 +127,9 @@ async def compox(s: shakida, message: Message):
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
              return
-       except Exception as a:
-             await f.edit(f'**PROSESS ERROR ‼️:** `{a}`')
-             return
+   #    except Exception as a:
+     #        await f.edit(f'**PROSESS ERROR ‼️:** `{a}`')
+     #        return
              
 @shakida.on_callback_query(
     filters.regex(pattern=r"cl")
@@ -165,7 +165,8 @@ async def callb(shakida, cb):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}\n'
-       + f'**🍻 CC:** {cb.from_user.mention()}' reply_markup=bu)
+       + f'**🍻 CC:** {cb.from_user.mention()}',
+       reply_markup=bu)
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
