@@ -105,7 +105,7 @@ async def compox(s: shakida, message: Message):
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                 ]])
-             await f.edit(f'**🏷️ {file_n}**\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
+             await f.edit(f'🏷️` {file_n}`\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
              proc = await asyncio.create_subprocess_shell(
              f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
@@ -115,7 +115,7 @@ async def compox(s: shakida, message: Message):
              await proc.communicate()
              out = f"{file}"
              os.remove(videox)
-             await f.edit(f'**🏷️ {file_n}**\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
+             await f.edit(f'`🏷️ {file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
              await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
                + f'**🍻 CC:** {message.from_user.mention()}')
