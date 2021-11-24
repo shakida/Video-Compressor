@@ -94,7 +94,7 @@ async def compox(s: shakida, message: Message):
                 wget.download(file_n, out=putt)
              except Exception as x:
                 temp.pop(0)
-                await f.edit(f'error: {x}')
+                await f.edit(f'**ERROR!:** {x}')
                 return
            except Exception as e:
              temp.pop(0)
