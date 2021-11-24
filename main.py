@@ -161,8 +161,11 @@ async def callb(shakida, cb):
        except:
           pass
        temp.pop(0)
+       bu = InlineKeyboardMarkup([[
+                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
+               ]])
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}\n'
-       + f'**🍻 CC:** {cb.from_user.mention()}')
+       + f'**🍻 CC:** {cb.from_user.mention()}' reply_markup=bu)
     except Exception as e:
        await cb.message.edit(f'**Nothing to stopped ‼️**\n**Resion: `{e}`')
        return
@@ -177,7 +180,8 @@ async def sya(shakida, cb):
      if type_ == "sys":
       #    await cb.answer(f"❌ Close by {by}")
       #    LOGGER.warning("Close button executed")
-          await cb.answer(f"💡 OPERATION STATUS:\n\n🗜️ {list} Operation Running 🟢", show_alert=True)
+          ccpu = f"{psutil.cpu_percent(interval=1)}%"
+          await cb.answer(f"💡 OPERATION STATUS:\n\n⚙️ Cpu usage: {ccpu}\n🗜️ #{list} Running 🟢", show_alert=True)
      return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
