@@ -86,7 +86,7 @@ async def compox(s: shakida, message: Message):
              )
              try:
                 await lol.communicate()
-             except Exceptionas x:
+             except Exception as x:
                 temp.pop(0)
                 await f.edit(f'error: {x}')
                 return
