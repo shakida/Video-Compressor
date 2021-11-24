@@ -40,7 +40,7 @@ async def compox(s: shakida, message: Message):
        try:
           if not video.video or video.document:
              url = video.text
-             await f.edit(f'**🔄 Prosesing**\n**🏷️ {url}')
+             await f.edit(f'**🔄 Prosesing**\n**🏷️`{url}`')
           if len(message.command) != 2:
              crf = 27
           if len(message.command) == 2:
@@ -55,7 +55,7 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
-             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
+             await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              try:
                 videox = await video.download(file)
@@ -75,7 +75,7 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
-             await f.edit(f'**🏷️ {file_n}**\n**📥 Downloading..**\n'
+             await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              ag = f"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
              cmd = f'wget -O {putt} {file_n}'
@@ -90,13 +90,11 @@ async def compox(s: shakida, message: Message):
                 temp.pop(0)
                 await f.edit(f'error: {x}')
                 return
-        #     videox = wget.download(file_n, out=putt)
            except Exception as e:
              temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
-          if video.video or video.document:
-           try:
+          try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
@@ -118,7 +116,7 @@ async def compox(s: shakida, message: Message):
              os.remove(f'{file}')
              temp.pop(0)
              await f.delete()
-           except Exception as a:
+          except Exception as a:
              os.remove(videox)
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
