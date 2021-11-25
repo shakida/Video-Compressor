@@ -75,8 +75,8 @@ async def compox(s: shakida, message: Message):
              gg = url.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
              putt = f'downloads/{file}'
-             t = requests.get(url, stream=true)
-             open(file, 'wb').write(thumb.content)
+       #      t = requests.get(url, stream=true)
+        #     open(file, 'wb').write(thumb.content)
              
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
@@ -122,7 +122,7 @@ async def compox(s: shakida, message: Message):
              os.remove(f'{file}')
              temp.pop(0)
              await f.delete()
-           except Exception as a
+           except Exception as a:
              os.remove(videox)
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
