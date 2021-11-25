@@ -39,9 +39,9 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-   #    try:
-  #        if not video.video or video.document:
-  #           url = video.text
+          if not video.video or video.document:
+             await f.edit(f'**No video provided ‼️')
+             return
 #             await f.edit(f'**🔄 Prosesing**\n**🏷️`{url}`')
           if len(message.command) != 2:
              crf = 27
@@ -62,7 +62,8 @@ async def compox(s: shakida, message: Message):
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              try:
                 videox = await video.download(file)
-             except:
+             except Exception as e:
+               await f.edit(f'**ERROR!!: Downloading error\n`{e}`)
                 temp.pop(0)
                 return
 
@@ -85,7 +86,7 @@ async def compox(s: shakida, message: Message):
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
              await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
                + f'**🍻 CC:** {message.from_user.mention()}')
-             os.remove(f'{file}')
+             os.remove(file)
              temp.pop(0)
              await f.delete()
           except Exception as a:
@@ -110,11 +111,11 @@ async def callb(shakida, cb):
     except Exception as e:
        print(e)
        return
-  #  sudo = int(875645659)
+    sudo = int(875645659)
     useer_id = int(any)
-  #  if cb.from_user.id != sudo:
-    #    print('not sudo')    
-    if cb.from_user.id != useer_id:
+    if cb.from_user.id = sudo:
+        print('not sudo')    
+    elif cb.from_user.id != useer_id:
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
@@ -148,7 +149,7 @@ async def sya(shakida, cb):
       #    await cb.answer(f"❌ Close by {by}")
       #    LOGGER.warning("Close button executed")
           ccpu = f"{psutil.cpu_percent(interval=1)}%"
-          await cb.answer(f"💡 OPERATION STATUS:\n\n⚙️ Cpu usage: {ccpu}\n🗜️ #{list} Running 🟢", show_alert=True)
+          await cb.answer(f"💡 OPERATION STATUS:\n\n⚙️ CPU USAGE: {ccpu}\n🗜️ # {list} Prosess Running 🟢", show_alert=True)
      return
 @shakida.on_message(filters.command("ss") & filters.group)
 async def shell(client: shakida, message: Message):
