@@ -81,7 +81,7 @@ async def compox(s: shakida, message: Message):
              await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              save_dir = 'downloads'
-             cmd = f'c:\aria2\aria2c.exe -d '+ {save_dir} +' -m 5 -o ' + {file} + " "+ {file_n}'
+             cmd = r'c:\aria2\aria2c.exe -d '+ save_dir +' -m 5 -o ' + file + " "+ file_n
          #    cmd = f'wget -O {putt} {file_n}'
              lol = await asyncio.create_subprocess_shell(
              f'{cmd}',
