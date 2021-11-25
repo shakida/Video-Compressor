@@ -29,6 +29,8 @@ shakida = Client(
 shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
+
+        
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           global temp
@@ -78,20 +80,18 @@ async def compox(s: shakida, message: Message):
              
              await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
-             """
-             ag = f"Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36"
-             
-             cmd = f'wget -O {putt} {file_n}'
+             save_dir = 'downloads'
+             cmd = r'c:\aria2\aria2c.exe -d '+ {save_dir} +' -m 5 -o ' + {file} + " "+ {file_n}
+         #    cmd = f'wget -O {putt} {file_n}'
              lol = await asyncio.create_subprocess_shell(
              f'{cmd}',
              stdout=asyncio.subprocess.PIPE,
              stderr=asyncio.subprocess.PIPE,
              )
-             """
              videox = putt
              try:
                 temp.append(str(file))
-                wget.download(file_n, out=putt)
+                await lol.communicate()
              except Exception as x:
                 temp.pop(0)
                 await f.edit(f'**ERROR!:** {x}')
