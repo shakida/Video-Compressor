@@ -89,13 +89,8 @@ async def compox(s: shakida, message: Message):
              stderr=asyncio.subprocess.PIPE,
              )
              videox = putt
-             try:
-                temp.append(str(file))
-                await lol.communicate()
-             except Exception as x:
-                temp.pop(0)
-                await f.edit(f'**ERROR!:** {x}')
-                return
+             temp.append(str(file))
+             await lol.communicate()
            except Exception as e:
              temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
@@ -144,11 +139,11 @@ async def callb(shakida, cb):
     except Exception as e:
        print(e)
        return
-    sudo = int(875645659)
+  #  sudo = int(875645659)
     useer_id = int(any)
-    if cb.from_user.id != sudo:
-        print('not sudo')    
-    elif cb.from_user.id != useer_id:
+  #  if cb.from_user.id != sudo:
+    #    print('not sudo')    
+    if cb.from_user.id != useer_id:
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
