@@ -65,7 +65,8 @@ async def compox(s: shakida, message: Message):
              except:
                 temp.pop(0)
                 return
-      """    if not video.video or video.document:
+      """ 
+          if not video.video or video.document:
            try:
              
           #   file_n = url
