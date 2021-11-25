@@ -65,7 +65,7 @@ async def compox(s: shakida, message: Message):
              except:
                 temp.pop(0)
                 return
-          if not video.video or video.document:
+      """    if not video.video or video.document:
            try:
              
           #   file_n = url
@@ -100,6 +100,7 @@ async def compox(s: shakida, message: Message):
              temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
+"""
            try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
