@@ -67,13 +67,17 @@ async def compox(s: shakida, message: Message):
                 return
           if not video.video or video.document:
            try:
-             file_n = url
-             ff = file_n.split(".")
+             
+          #   file_n = url
+             ff = url.split(".")
              x = len(ff)
              xt = x-1
-             gg = file_n.split(".")[xt]
+             gg = url.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
              putt = f'downloads/{file}'
+             t = requests.get(url, stream=true)
+             open(file, 'wb').write(thumb.content)
+             
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
@@ -82,21 +86,21 @@ async def compox(s: shakida, message: Message):
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
            #    --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" 
              
-             cmd = f'wget --output-file {putt} {file_n}'
+         #    cmd = f'wget --output-file {putt} {file_n}'
          #    cmd = f'wget -O {putt} {file_n}'
-             lol = await asyncio.create_subprocess_shell(
-             f'{cmd}',
-             stdout=asyncio.subprocess.PIPE,
-             stderr=asyncio.subprocess.PIPE,
-             )
+         #    lol = await asyncio.create_subprocess_shell(
+         #    f'{cmd}',
+        #     stdout=asyncio.subprocess.PIPE,
+         #    stderr=asyncio.subprocess.PIPE,
+        #     )
              videox = putt
              temp.append(str(file))
-             await lol.communicate()
+             wget.download(file_n, out=putt)
            except Exception as e:
              temp.pop(0)
              await f.edit(f'**ERROR‼️**: LINK ERROR ❌\nUse direct link or end with .mp4, .mkv, .raw, .avi, etc\n`{e}`')
              return
-          try:
+           try:
              but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
@@ -118,7 +122,7 @@ async def compox(s: shakida, message: Message):
              os.remove(f'{file}')
              temp.pop(0)
              await f.delete()
-          except Exception as a:
+           except Exception as a
              os.remove(videox)
              temp.pop(0)
              await f.edit(f'**ERROR!:**\n`{a}`')
