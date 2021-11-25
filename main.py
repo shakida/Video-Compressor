@@ -73,15 +73,16 @@ async def compox(s: shakida, message: Message):
              xt = x-1
              gg = file_n.split(".")[xt]
              file = f'fuckyoubaby.{gg}'
-             putt = f'downloads/'
+             putt = f'downloads/{file}'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              
              await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
+           #    --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" 
              
-             cmd = f'wget  --user-agent="Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0" --output-file {putt} {file_n}'
+             cmd = f'wget --output-file {putt} {file_n}'
          #    cmd = f'wget -O {putt} {file_n}'
              lol = await asyncio.create_subprocess_shell(
              f'{cmd}',
