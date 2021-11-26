@@ -54,7 +54,7 @@ async def compox(s: shakida, message: Message):
           if not video.video or video.document:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
-          if video.video or video.document:
+    #      if video.video or video.document:
              f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
              if len(message.command) != 2:
                crf = 27
@@ -63,7 +63,7 @@ async def compox(s: shakida, message: Message):
              if (crf < 20) or (crf > 50):
                await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                return
-     #     if video.video or video.document:
+             if video.video or video.document:
                file_n = video.video.file_name
                ch = video.video.mime_type.split('/')[1]
                duration = video.video.duration
