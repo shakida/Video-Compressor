@@ -39,7 +39,7 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
-          if not video.video or video.document:
+          if not video.video or video.document or video:
              await f.edit(f'**No video provided ‼️')
              return
 #             await f.edit(f'**🔄 Prosesing**\n**🏷️`{url}`')
@@ -53,6 +53,8 @@ async def compox(s: shakida, message: Message):
      #     if video.video or video.document:
              file_n = video.video.file_name
              ch = video.video.mime_type.split('/')[1]
+             duration = video.video.duration
+             file_s = video.video.file_size
              file = f'{video.video.file_unique_id}.mkv'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
@@ -63,7 +65,7 @@ async def compox(s: shakida, message: Message):
                 videox = await video.download(file)
              except Exception as e:
                temp.pop(0)
-               await f.edit(f'**ERROR!!: Downloading error\n`{e}`')
+               await f.edit(f'**ERROR!!: Downloading error.\n`{e}`')
                return
 
              try:
@@ -78,7 +80,11 @@ async def compox(s: shakida, message: Message):
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.PIPE,
                 )
-                await proc.communicate()
+                try:
+                   await proc.communicate()
+                except Exception as e:
+                   await f.edit(f'**ERROR!!:** {e}`)
+                   return
                 out = f"{file}"
                 os.remove(videox)
                 await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
