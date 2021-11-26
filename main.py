@@ -30,6 +30,18 @@ shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
 
+
+def humanbytes(size):
+    if not size:
+        return ""
+    power = 2 ** 10
+    raised_to_pow = 0
+    dict_power_n = {0: "", 1: "Ki", 2: "Mi", 3: "Gi", 4: "Ti"}
+    while size > power:
+        size /= power
+        raised_to_pow += 1
+    return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
+
         
 @shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
@@ -55,6 +67,8 @@ async def compox(s: shakida, message: Message):
              ch = video.video.mime_type.split('/')[1]
              duration = video.video.duration
              file_s = video.video.file_size
+             height = video.video.height
+             width = video.video.width
              file = f'{video.video.file_unique_id}.mkv'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
@@ -89,7 +103,8 @@ async def compox(s: shakida, message: Message):
                 os.remove(videox)
                 await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
                 + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-                await video.reply_video(out, caption=f'**🏷️ File Name: `{file_n}`\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
+                await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
+                + f'**💾 Orginal size: {humanbytes(file_s)}\n'
                 + f'**🍻 CC:** {message.from_user.mention()}')
                 os.remove(file)
                 temp.pop(0)
