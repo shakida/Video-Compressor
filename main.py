@@ -63,8 +63,8 @@ async def compox(s: shakida, message: Message):
              try:
                 videox = await video.download(file)
              except Exception as e:
+               temp.pop(0)
                await f.edit(f'**ERROR!!: Downloading error\n`{e}`')
-                temp.pop(0)
                 return
 
           try:
