@@ -65,7 +65,7 @@ async def compox(s: shakida, message: Message):
              except Exception as e:
                temp.pop(0)
                await f.edit(f'**ERROR!!: Downloading error\n`{e}`')
-                return
+               return
 
           try:
              but = InlineKeyboardMarkup([[
