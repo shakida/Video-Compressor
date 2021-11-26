@@ -58,7 +58,7 @@ async def compox(s: shakida, message: Message):
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                ]])
              temp.append(str(file))
-             await f.edit(f'🏷️ `{file_n}`\n**📥 Downloading..**\n'
+             await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
              try:
                 videox = await video.download(file)
@@ -67,33 +67,33 @@ async def compox(s: shakida, message: Message):
                await f.edit(f'**ERROR!!: Downloading error\n`{e}`')
                return
 
-          try:
-             but = InlineKeyboardMarkup([[
+             try:
+                but = InlineKeyboardMarkup([[
                 InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                 InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                 ]])
-             await f.edit(f'🏷️` {file_n}`\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
-             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-             proc = await asyncio.create_subprocess_shell(
-             f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
-             stdout=asyncio.subprocess.PIPE,
-             stderr=asyncio.subprocess.PIPE,
-             )
-             await proc.communicate()
-             out = f"{file}"
-             os.remove(videox)
-             await f.edit(f'`🏷️ {file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
-             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-             await video.reply_video(out, caption=f'**✅ UPLOADED SUCCESSFULLY.**\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
-               + f'**🍻 CC:** {message.from_user.mention()}')
-             os.remove(file)
-             temp.pop(0)
-             await f.delete()
-          except Exception as a:
-             os.remove(videox)
-             temp.pop(0)
-             await f.edit(f'**ERROR!:**\n`{a}`')
-             return
+                await f.edit(f'**🏷️ File Name:** ` {file_n}`\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
+                + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
+                proc = await asyncio.create_subprocess_shell(
+                f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
+                stdout=asyncio.subprocess.PIPE,
+                stderr=asyncio.subprocess.PIPE,
+                )
+                await proc.communicate()
+                out = f"{file}"
+                os.remove(videox)
+                await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
+                + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
+                await video.reply_video(out, caption=f'**🏷️ File Name: `{file_n}`\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
+                + f'**🍻 CC:** {message.from_user.mention()}')
+                os.remove(file)
+                temp.pop(0)
+                await f.delete()
+             except Exception as a:
+                os.remove(videox)
+                temp.pop(0)
+                await f.edit(f'**ERROR!:**\n`{a}`')
+                return
    #    except Exception as a:
      #        await f.edit(f'**PROSESS ERROR ‼️:** `{a}`')
      #        return
