@@ -113,9 +113,9 @@ async def callb(shakida, cb):
        return
     sudo = int(875645659)
     useer_id = int(any)
-    if cb.from_user.id = sudo:
-        print('not sudo')    
-    elif cb.from_user.id != useer_id:
+ #   if cb.from_user.id = sudo:
+   #     print('not sudo')    
+    if cb.from_user.id != useer_id:
         await cb.answer("❌ Not for you.", show_alert=True)
         return
     try:
