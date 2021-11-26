@@ -97,7 +97,7 @@ async def compox(s: shakida, message: Message):
                 try:
                    await proc.communicate()
                 except Exception as e:
-                   await f.edit(f'**ERROR!!:** {e}`)
+                   await f.edit(f'**ERROR!!:** {e}`')
                    return
                 out = f"{file}"
                 os.remove(videox)
