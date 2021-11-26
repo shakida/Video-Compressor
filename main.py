@@ -50,13 +50,12 @@ async def compox(s: shakida, message: Message):
           if (crf < 20) or (crf > 50):
              await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
              return
-          if video.video or video.document:
+     #     if video.video or video.document:
              file_n = video.video.file_name
              ch = video.video.mime_type.split('/')[1]
-             file = f'{video.video.file_unique_id}.{ch}'
+             file = f'{video.video.file_unique_id}.mkv'
              butt = InlineKeyboardMarkup([[
-                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
-               ]])
+                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
              temp.append(str(file))
              await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 Downloading..**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
