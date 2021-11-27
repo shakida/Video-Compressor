@@ -51,10 +51,10 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           
-          if not video.video or video.document:
+          if not video.document or video.video:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
-          if video.video or video.document:
+          if video.document or video.video:
              f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
              if len(message.command) != 2:
                crf = 27
@@ -63,7 +63,7 @@ async def compox(s: shakida, message: Message):
              if (crf < 20) or (crf > 50):
                await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                return
-             if video.video or video.document:
+             if video.document or video.video:
                file_n = video.video.file_name
                ch = video.video.mime_type.split('/')[1]
                duration = video.video.duration
@@ -74,7 +74,7 @@ async def compox(s: shakida, message: Message):
                butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
                temp.append(str(file))
-               await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 Downloading..**\n'
+               await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
                + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
                try:
                   videox = await video.download(file)
@@ -88,7 +88,7 @@ async def compox(s: shakida, message: Message):
                   InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                   InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                   ]])
-                  await f.edit(f'**🏷️ File Name:** ` {file_n}`\n**🗜️ Compressing...**\n**⚙️ CRF Range:** `{crf}`\n'
+                  await f.edit(f'**🏷️ File Name:** ` {file_n}`\n**🗜️ COMPRESSING...**\n**⚙️ CRF Range:** `{crf}`\n'
                   + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
                   proc = await asyncio.create_subprocess_shell(
                   f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
@@ -104,8 +104,9 @@ async def compox(s: shakida, message: Message):
                   os.remove(videox)
                   await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
                   + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-                  await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`\n**🛠️ Engine:** `FFMAPG`\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n**📺 Quality:** `Standard`\n'
-                  + f'**💾 Orginal size: {humanbytes(file_s)}\n'
+                  await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`'
+                  + f'\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n'
+                  + f'**💾 Orginal size:** {humanbytes(file_s)}\n'
                   + f'**🍻 CC:** {message.from_user.mention()}')
                   os.remove(file)
                   temp.pop(0)
