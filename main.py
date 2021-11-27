@@ -25,7 +25,7 @@ shakida = Client(
     ":memory:",
     '2177518',
     '6f700167aeed1f5d546eab443e85bd7d',
-    bot_token='1851824879:AAHu_kSVPmJusQOVGE9y_f7RLcMoym_jgwg')
+    bot_token='2132740464:AAFPm6tK0Rsaw4j8h-hjgf1F2UEjOpiAWXI')
 shakida.start()
 shakida.send_message(-1001297289773, f'🍑 Alive')
 temp = []
@@ -47,14 +47,16 @@ def humanbytes(size):
 async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
-          video = message.reply_to_message
+          video = (message.reply_to_message.document or message.reply_to_message.video)
+   
+    #url = get_url(message)
           any = message.from_user.id
          # crf = 27
           
-          if not video.document or video.video:
+          if not video:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
-          if video.document or video.video:
+          if video:
              f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
              if len(message.command) != 2:
                crf = 27
@@ -63,7 +65,8 @@ async def compox(s: shakida, message: Message):
              if (crf < 20) or (crf > 50):
                await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                return
-             if video.document or video.video:
+        #     if video.document or video.video:
+             if message.reply_to_message.video:
                file_n = video.video.file_name
                ch = video.video.mime_type.split('/')[1]
                duration = video.video.duration
@@ -71,51 +74,59 @@ async def compox(s: shakida, message: Message):
                height = video.video.height
                width = video.video.width
                file = f'{video.video.file_unique_id}.mkv'
+             elif message.reply_to_message.document:
+               file_n = video.document.file_name
+               ch = video.document.mime_type.split('/')[1]
+               duration = video.document.duration
+               file_s = video.document.file_size
+               height = None
+               width = None
+               file = f'{video.document.file_unique_id}.mkv'
                butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
-               temp.append(str(file))
-               await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
-               + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
-               try:
-                  videox = await video.download(file)
-               except Exception as e:
-                  temp.pop(0)
-                  await f.edit(f'**ERROR!!: Downloading error.\n`{e}`')
-                  return
+             temp.append(str(file))
+             await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
+             + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
+             try:
+                videox = await video.download(file)
+             except Exception as e:
+                temp.pop(0)
+                await f.edit(f'**ERROR!!: Downloading error.\n`{e}`')
+                return
 
-               try:
-                  but = InlineKeyboardMarkup([[
+             try:
+                but = InlineKeyboardMarkup([[
                   InlineKeyboardButton("❌ Cancel", callback_data=f'cl {file}|{crf}|{any}'),
                   InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
                   ]])
-                  await f.edit(f'**🏷️ File Name:** ` {file_n}`\n**🗜️ COMPRESSING...**\n**⚙️ CRF Range:** `{crf}`\n'
-                  + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-                  proc = await asyncio.create_subprocess_shell(
+                await f.edit(f'**🏷️ File Name:** ` {file_n}`\n**🗜️ COMPRESSING...**\n**⚙️ CRF Range:** `{crf}`\n'
+                + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
+                proc = await asyncio.create_subprocess_shell(
                   f'ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y',
                   stdout=asyncio.subprocess.PIPE,
                   stderr=asyncio.subprocess.PIPE,
                   )
-                  try:
-                     await proc.communicate()
-                  except Exception as e:
-                     await f.edit(f'**ERROR!!:** {e}`')
-                     return
-                  out = f"{file}"
-                  os.remove(videox)
-                  await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
-                  + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
-                  await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`'
-                  + f'\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n'
-                  + f'**💾 Orginal size:** {humanbytes(file_s)}\n'
-                  + f'**🍻 CC:** {message.from_user.mention()}')
-                  os.remove(file)
-                  temp.pop(0)
-                  await f.delete()
-               except Exception as a:
-                  os.remove(videox)
-                  temp.pop(0)
-                  await f.edit(f'**ERROR!:**\n`{a}`')
-                  return
+                try:
+                   await proc.communicate()
+                except Exception as e:
+                   await f.edit(f'**ERROR!!:** {e}`')
+                   return
+                out = f"{file}"
+                os.remove(videox)
+                await f.edit(f'**🏷️ File Name:** `{file_n}`\n**COMPRESSION SUCCESSFULLY DONE ✅**\n**📤 File Uploading...**\n'
+                + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
+                await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`'
+                + f'\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n'
+                + f'**💾 Orginal size:** {humanbytes(file_s)}\n'
+                + f'**🍻 CC:** {message.from_user.mention()}')
+                os.remove(file)
+                temp.pop(0)
+                await f.delete()
+             except Exception as a:
+                os.remove(videox)
+                temp.pop(0)
+                await f.edit(f'**ERROR!:**\n`{a}`')
+                return
    #    except Exception as a:
      #        await f.edit(f'**PROSESS ERROR ‼️:** `{a}`')
      #        return
