@@ -83,7 +83,7 @@ async def compox(s: shakida, message: Message):
                 width = 320
                 file = f'{video.document.file_unique_id}.mkv'
              else:
-                await f.edit('ERROR: IT'S NOT MEDIA!')
+                await f.edit(f"ERROR: NOT MEDIA!")
                 return
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
