@@ -47,8 +47,8 @@ def humanbytes(size):
 async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
-          video = (message.reply_to_message.document or message.reply_to_message.video)
-   
+          video = (message.reply_to_message.document or message.reply_to_message.video) if message.reply_to_message else None
+    url = get_url(message)
     #url = get_url(message)
           any = message.from_user.id
          # crf = 27
