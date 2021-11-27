@@ -47,7 +47,7 @@ def humanbytes(size):
 async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
-          video = (message.reply_to_message.video or message.reply_to_message.document) if message.reply_to_message else None
+          video = message.reply_to_message.video
        #  url = get_url(message)
     #url = get_url(message)
           any = message.from_user.id
@@ -66,26 +66,14 @@ async def compox(s: shakida, message: Message):
                 await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                 return
         #     if video.document or video.video:
-             if message.reply_to_message.video:
-               file_n = video.video.file_name
-               ch = video.video.mime_type.split('/')[1]
-               duration = video.video.duration
-               file_s = video.video.file_size
-               height = video.video.height
-               width = video.video.width
-               file = f'{video.video.file_unique_id}.mkv'
-             elif message.reply_to_message.document:
-               file_n = video.document.file_name
-               ch = video.document.mime_type.split('/')[1]
-               duration = video.document.duration
-               file_s = video.document.file_size
-               height = None
-               width = None
-               file = f'{video.document.file_unique_id}.mkv'
-               
-             else:
-               await f.edit(f'**ERROR!! its not media')
-               return
+     # )       ifvide:
+             file_n = video.video.file_name
+             ch = video.video.mime_type.split('/')[1]
+             duration = video.video.duration
+             file_s = video.video.file_size
+             height = video.video.height
+             width = video.video.width
+             file = f'{video.video.file_unique_id}.mkv'
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
              temp.append(str(file))
