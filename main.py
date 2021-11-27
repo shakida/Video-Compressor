@@ -53,7 +53,7 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           
-          if not message.reply_to_message.document and message.reply_to_message.video:
+          if not (message.reply_to_message.document or message.reply_to_message.video):
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
           else:
