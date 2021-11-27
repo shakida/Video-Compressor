@@ -53,7 +53,7 @@ async def compox(s: shakida, message: Message):
           any = message.from_user.id
          # crf = 27
           
-          if not video.video:
+          if not video.video or video.document:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
           else:
@@ -65,15 +65,26 @@ async def compox(s: shakida, message: Message):
              if (crf < 20) or (crf > 50):
                 await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                 return
-        #     if video.document or video.video:
+             if video.video:
      # )       ifvide:
-             file_n = video.video.file_name
-             ch = video.video.mime_type.split('/')[1]
-             duration = video.video.duration
-             file_s = video.video.file_size
-             height = video.video.height
-             width = video.video.width
-             file = f'{video.video.file_unique_id}.mkv'
+                file_n = video.video.file_name
+                ch = video.video.mime_type.split('/')[1]
+                duration = video.video.duration
+                file_s = video.video.file_size
+                height = video.video.height
+                width = video.video.width
+                file = f'{video.video.file_unique_id}.mkv'
+             elif video.document:
+                file_n = video.document.file_name
+                ch = video.document.mime_type.split('/')[1]
+                duration = video.document.duration
+                file_s = video.document.file_size
+                height = 320
+                width = 320
+                file = f'{video.document.file_unique_id}.mkv'
+             else:
+                await f.edit('ERROR: IT'S NOT MEDIA!')
+                return
              butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
              temp.append(str(file))
