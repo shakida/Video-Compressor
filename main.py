@@ -48,23 +48,23 @@ async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
           video = (message.reply_to_message.document or message.reply_to_message.video) if message.reply_to_message else None
-   # url = get_url(message)
+       #  url = get_url(message)
     #url = get_url(message)
           any = message.from_user.id
          # crf = 27
           
-          if not video:
+          if not message.reply_to_message.document and message.reply_to_message.video:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
-          if video:
+          else:
              f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
              if len(message.command) != 2:
-               crf = 27
+                crf = 27
              if len(message.command) == 2:
-               crf = int(message.text.split(None)[1])
+                crf = int(message.text.split(None)[1])
              if (crf < 20) or (crf > 50):
-               await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
-               return
+                await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
+                return
         #     if video.document or video.video:
              if message.reply_to_message.video:
                file_n = video.video.file_name
@@ -84,6 +84,9 @@ async def compox(s: shakida, message: Message):
                file = f'{video.document.file_unique_id}.mkv'
                butt = InlineKeyboardMarkup([[
                       InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
+             else:
+               await f.edit(f'**ERROR!! its not media')
+               return
              temp.append(str(file))
              await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
