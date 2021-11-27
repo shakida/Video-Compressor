@@ -47,13 +47,13 @@ def humanbytes(size):
 async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
-          video = (message.reply_to_message.document or message.reply_to_message.video) if message.reply_to_message else None
+          video = (message.reply_to_message.video or message.reply_to_message.document) if message.reply_to_message else None
        #  url = get_url(message)
     #url = get_url(message)
           any = message.from_user.id
          # crf = 27
           
-          if not (message.reply_to_message.document or message.reply_to_message.video):
+          if not video:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
           else:
@@ -82,11 +82,12 @@ async def compox(s: shakida, message: Message):
                height = None
                width = None
                file = f'{video.document.file_unique_id}.mkv'
-               butt = InlineKeyboardMarkup([[
-                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
+               
              else:
                await f.edit(f'**ERROR!! its not media')
                return
+             butt = InlineKeyboardMarkup([[
+                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
              temp.append(str(file))
              await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
