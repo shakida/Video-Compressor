@@ -56,9 +56,6 @@ async def compox(s: shakida, message: Message):
           if not video.video:
              await s.send_message(message.chat.id, f'**No video provided ‼️')
              return
-          elif not video.document:
-             await s.send_message(message.chat.id, f'**No video provided ‼️')
-             return
           else:
              f = await s.send_message(message.chat.id, f"**🔄 Prosesing**")
              if len(message.command) != 2:
@@ -68,28 +65,14 @@ async def compox(s: shakida, message: Message):
              if (crf < 20) or (crf > 50):
                 await f.edit(f'**ERROR!**\nCRF 20-50 value only or default 27')
                 return
-             if video.video:
-     # )       ifvide:
-                file_n = video.video.file_name
-                ch = video.video.mime_type.split('/')[1]
-                duration = video.video.duration
-                file_s = video.video.file_size
-                height = video.video.height
-                width = video.video.width
-                file = f'{video.video.file_unique_id}.mkv'
-             elif video.document:
-                file_n = video.document.file_name
-                ch = video.document.mime_type.split('/')[1]
-                duration = video.document.duration
-                file_s = video.document.file_size
-                height = 320
-                width = 320
-                file = f'{video.document.file_unique_id}.mkv'
-             else:
-                await f.edit(f"ERROR: NOT MEDIA!")
-                return
-             butt = InlineKeyboardMarkup([[
-                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
+             file_n = video.video.file_name
+             ch = video.video.mime_type.split('/')[1]
+             duration = video.video.duration
+             file_s = video.video.file_size
+             height = video.video.height
+             width = video.video.width
+             file = f'{video.video.file_unique_id}.mkv'
+             butt = InlineKeyboardMarkup([[InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
              temp.append(str(file))
              await f.edit(f'**🏷️ File Name:** `{file_n}`\n**📥 DOWNLOADING...**\n'
              + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=butt)
@@ -123,7 +106,7 @@ async def compox(s: shakida, message: Message):
                 + f'**🍻 CC:** {message.from_user.first_name}', reply_markup=but)
                 await video.reply_video(out, duration=duration, height=height, width=width, caption=f'**🏷️ File Name: `{file_n}`'
                 + f'\n**🚦 Preset:** `Ultrafast`\n**⚙️ CRF:** `{crf}`\n'
-                + f'**💾 Orginal size:** {humanbytes(file_s)}\n'
+                + f'**💾 Orginal size:** `{humanbytes(file_s)}`\n'
                 + f'**🍻 CC:** {message.from_user.mention()}')
                 os.remove(file)
                 temp.pop(0)
@@ -159,17 +142,12 @@ async def callb(shakida, cb):
         return
     try:
        try:
-          os.remove(f'downloads/{file}')
-       except:
-          pass
-       try:
           os.remove(f'{file}')
        except:
           pass
        temp.pop(0)
-       bu = InlineKeyboardMarkup([[
-                      InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),
-               ]])
+       os.remove(f'downloads/{file}')
+       bu = InlineKeyboardMarkup([[InlineKeyboardButton("⚙️ Status", callback_data=f"sys"),]])
        await cb.message.edit(f'**❌ STOPPED OPERATION**\n**⚙️ CRF RANGE:** {crf}\n'
        + f'**🍻 CC:** {cb.from_user.mention()}',
        reply_markup=bu)
