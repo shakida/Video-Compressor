@@ -43,7 +43,7 @@ def humanbytes(size):
     return str(round(size, 2)) + " " + dict_power_n[raised_to_pow] + "B"
 
         
-@shakida.on_message(filters.command(["compo"]) & filters.group & ~ filters.edited)
+@shakida.on_message(filters.command(["compo", "compo@svidcompo_bot"]) & filters.group & ~ filters.edited)
 async def compox(s: shakida, message: Message):
           global temp
           tempid = uuid.uuid4()
