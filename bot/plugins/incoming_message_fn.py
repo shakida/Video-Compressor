@@ -3,6 +3,9 @@
 
 import datetime
 import logging
+import subprocess
+import asyncio
+import psutil
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -297,13 +300,19 @@ async def incoming_compress_message_f(bot, update):
             text=Localisation.COMPRESS_START
         )
         c_start = time.time()
+        out = 'fvid.mp4'
+        proc = await asyncio.create_subprocess_exec(
+        f'ffmpeg -hide_banner -loglevel -quiet -i "{video}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out}" -y',
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE,)
+        await proc.communicate()
         caption= 'ok'
         LOGGER.info('text=Localisation.COMPRESS_START')
         ok = await bot.send_video(
                 chat_id=update.chat.id,
                 duration=duration,
                 caption=caption,
-                video=video,)
+                video=out,)
         LOGGER.info(f'Uploaded: {video}')
         o = await convert_video(
             video,
