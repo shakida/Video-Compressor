@@ -58,6 +58,7 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
     else:
+        target_crf = target_crf
     #   target_percentage = 'auto'
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_exec(
