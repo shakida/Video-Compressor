@@ -37,22 +37,16 @@ async def convert_video(video, DOWNLOAD_LOCATION, duration, bot, sent_message, t
     progress = output_directory + "/" + "progress.txt"
     with open(progress, 'w') as f:
       pass
-
-#ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y
-    
-  #  file_genertor_command = [f'ffmpeg -hide_banner -loglevel -quiet -progress progress -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y']
     if not isAuto:
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
-      LOGGER.info(f'Not Auto {target_crf}')
+      LOGGER.info(f'Manually: CRF-{target_crf}')
     else:
-        target_crf = target_crf
-    #   target_percentage = 'auto'
-        LOGGER.info(f'Auto on {target_crf}')
+      target_crf = target_crf
+      LOGGER.info(f'Auto: CRF-{target_crf}')
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_exec(
         f'ffmpeg -hide_banner -loglevel -quiet -progress "{progress}" -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y',
-        # stdout must a pipe to be accessible as process.stdout
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
     )
@@ -64,7 +58,6 @@ async def convert_video(video, DOWNLOAD_LOCATION, duration, bot, sent_message, t
       statusMsg['message'] = message.message_id
       f.seek(0)
       json.dump(statusMsg,f,indent=2)
-    # os.kill(process.pid, 9)
     isDone = False
     while process.returncode != 0:
       await asyncio.sleep(3)
@@ -120,14 +113,11 @@ async def convert_video(video, DOWNLOAD_LOCATION, duration, bot, sent_message, t
         except:
             pass
         try:
-          await bug.edit_text(text=stats)
+          await message.edit_text(text=stats)
         except:
           pass
         
-    # Wait for the subprocess to finish
     stdout, stderr = await process.communicate()
-    #if( not isDone):
-      #return None
     e_response = stderr.decode().strip()
     t_response = stdout.decode().strip()
     LOGGER.info(e_response)
