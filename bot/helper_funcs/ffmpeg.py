@@ -52,8 +52,8 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
       "ultrafast",
       "-crf",
       target_crf,
-      "copy",
-      out_put_file_name
+      out_put_file_name,
+      "-y",
     ]
     if not isAuto:
       filesize = os.stat(video_file).st_size
