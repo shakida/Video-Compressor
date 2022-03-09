@@ -7,3 +7,4 @@ pyrogram
 motor
 https://github.com/Tinche/aiofiles/archive/master.zip
 dnspython
+ffmpeg
