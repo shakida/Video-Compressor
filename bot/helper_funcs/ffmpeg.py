@@ -28,6 +28,7 @@ from bot import (
 
 async def convert_video(video_file, output_directory, total_time, bot, message, target_crf, isAuto, bug):
     # https://stackoverflow.com/a/13891070/4723940
+    LOGGER.info('Convert started')
     out_put_file_name = output_directory + \
         "/" + str(round(time.time())) + ".mp4"
     progress = output_directory + "/" + "progress.txt"
@@ -57,9 +58,11 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
     if not isAuto:
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
+      LOGGER.info(f'Not Auto {target_crf}')
     else:
         target_crf = target_crf
     #   target_percentage = 'auto'
+        LOGGER.info(f'Auto on {target_crf}')
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_exec(
         *file_genertor_command,
@@ -123,7 +126,7 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
             reply_markup=InlineKeyboardMarkup(
                 [
                     [ 
-                        InlineKeyboardButton('❌ Cancel ❌', callback_data='fuckingdo')
+                        InlineKeyboardButton('❌ Cancel', callback_data='fuckingdo')
                     ]
                 ]
             )
