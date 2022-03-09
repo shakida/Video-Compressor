@@ -191,7 +191,7 @@ async def incoming_compress_message_f(bot, update):
                 }
 
                 json.dump(statusMsg, f, indent=2)
-            video = await bot.download_media(
+            video = await bot.download(
                 message=update.reply_to_message,
                 file_name=saved_file_path,
                 progress=progress_for_pyrogram,
@@ -432,11 +432,11 @@ async def incoming_cancel_message_f(bot, update):
     if os.path.exists(status):
         inline_keyboard = []
         ikeyboard = []
-        ikeyboard.append(InlineKeyboardButton("Yes 🚫", callback_data=("fuckingdo").encode("UTF-8")))
-        ikeyboard.append(InlineKeyboardButton("No ‼️", callback_data=("fuckoff").encode("UTF-8")))
+        ikeyboard.append(InlineKeyboardButton("Yes", callback_data=("fuckingdo").encode("UTF-8")))
+        ikeyboard.append(InlineKeyboardButton("No", callback_data=("fuckoff").encode("UTF-8")))
         inline_keyboard.append(ikeyboard)
         reply_markup = InlineKeyboardMarkup(inline_keyboard)
-        await update.reply_text("Are you sure? 🚫 This will stop the compression!", reply_markup=reply_markup,
+        await update.reply_text("Are you sure? This will stop the compression!", reply_markup=reply_markup,
                                 quote=True)
     else:
         delete_downloads()
