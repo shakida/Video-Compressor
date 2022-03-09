@@ -40,7 +40,7 @@ async def convert_video(video, DOWNLOAD_LOCATION, duration, bot, sent_message, t
 
 #ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y
     
-    file_genertor_command = [f'ffmpeg -hide_banner -loglevel -quiet -progress progress -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y']
+  #  file_genertor_command = [f'ffmpeg -hide_banner -loglevel -quiet -progress progress -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y']
     if not isAuto:
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
@@ -51,7 +51,7 @@ async def convert_video(video, DOWNLOAD_LOCATION, duration, bot, sent_message, t
         LOGGER.info(f'Auto on {target_crf}')
     COMPRESSION_START_TIME = time.time()
     process = await asyncio.create_subprocess_exec(
-        *file_genertor_command,
+        f'ffmpeg -hide_banner -loglevel -quiet -progress "{progress}" -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y',
         # stdout must a pipe to be accessible as process.stdout
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
