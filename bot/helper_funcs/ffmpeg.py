@@ -57,22 +57,6 @@ async def convert_video(video_file, output_directory, total_time, bot, message, 
     if not isAuto:
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
-  '''    calculated_percentage = 100 - target_percentage
-      target_size = ( calculated_percentage / 100 ) * filesize
-      target_bitrate = int(math.floor( target_size * 8 / total_time ))
-      if target_bitrate // 1000000 >= 1:
-        bitrate = str(target_bitrate//1000000) + "M"
-      elif target_bitrate // 1000 > 1:
-        bitrate = str(target_bitrate//1000) + "k"
-      else:
-        return None
-      extra = [ "-b:v", 
-                bitrate,
-                "-bufsize",
-                bitrate
-              ]
-      for elem in reversed(extra) :
-        file_genertor_command.insert(10, elem)'''
     else:
     #   target_percentage = 'auto'
     COMPRESSION_START_TIME = time.time()
