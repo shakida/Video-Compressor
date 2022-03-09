@@ -159,7 +159,7 @@ async def incoming_compress_message_f(bot, update):
             pass
     else:
         isAuto = True
-    user_file = str(update.from_user.id) + ".FFMpegRoBot.mkv"
+    user_file = str(update.from_user.id) + "RAWshakida.mkv"
     saved_file_path = DOWNLOAD_LOCATION + "/" + user_file
     LOGGER.info(saved_file_path)
     d_start = time.time()
@@ -299,7 +299,7 @@ async def incoming_compress_message_f(bot, update):
         c_start = time.time()
         LOGGER.info(c_start)
         o = await convert_video(
-            saved_file_path,
+            video,
             DOWNLOAD_LOCATION,
             duration,
             bot,
