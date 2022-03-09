@@ -43,7 +43,6 @@ from bot.helper_funcs.utils import (
     delete_downloads
 )
 
-LOGS_CHANNEL = -1001283278354
 db = Database(DATABASE_URL, SESSION_NAME)
 CURRENT_PROCESSES = {}
 CHAT_FLOOD = {}
@@ -298,6 +297,7 @@ async def incoming_compress_message_f(bot, update):
             text=Localisation.COMPRESS_START
         )
         c_start = time.time()
+        LOGGER.info(c_start)
         o = await convert_video(
             saved_file_path,
             DOWNLOAD_LOCATION,
@@ -309,7 +309,7 @@ async def incoming_compress_message_f(bot, update):
             compress_start
         )
         compressed_time = TimeFormatter((time.time() - c_start) * 1000)
-        LOGGER.info(o)
+        LOGGER.info(str{o})
         if o == 'stopped':
             return
         if o is not None:
