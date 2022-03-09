@@ -191,7 +191,7 @@ async def incoming_compress_message_f(bot, update):
                 }
 
                 json.dump(statusMsg, f, indent=2)
-            video = await bot.download(
+            video = await bot.download_media(
                 message=update.reply_to_message,
                 file_name=saved_file_path,
                 progress=progress_for_pyrogram,
