@@ -26,7 +26,7 @@ from bot import (
     DOWNLOAD_LOCATION
 )
 
-async def convert_video(saved_file_path, DOWNLOAD_LOCATION, duration, bot, sent_message, target_crf, isAuto, compress_start, bug):
+async def convert_video(saved_file_path, DOWNLOAD_LOCATION, duration, bot, sent_message, target_crf, isAuto, compress_start):
     # https://stackoverflow.com/a/13891070/4723940
     LOGGER.info('Convert started')
     output_directory = DOWNLOAD_LOCATION
