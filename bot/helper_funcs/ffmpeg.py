@@ -26,9 +26,12 @@ from bot import (
     DOWNLOAD_LOCATION
 )
 
-async def convert_video(video_file, output_directory, total_time, bot, message, target_crf, isAuto, bug):
+async def convert_video(saved_file_path, DOWNLOAD_LOCATION, duration, bot, sent_message, target_crf, isAuto, compress_start, bug):
     # https://stackoverflow.com/a/13891070/4723940
     LOGGER.info('Convert started')
+    output_directory = DOWNLOAD_LOCATION
+    video_file = saved_file_path
+    message = sent_message
     out_put_file_name = output_directory + \
         "/" + str(round(time.time())) + ".mp4"
     progress = output_directory + "/" + "progress.txt"
