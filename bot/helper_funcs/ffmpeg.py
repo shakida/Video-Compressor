@@ -40,24 +40,7 @@ async def convert_video(saved_file_path, DOWNLOAD_LOCATION, duration, bot, sent_
 
 #ffmpeg -hide_banner -loglevel quiet -i "{videox}" -preset ultrafast -vcodec libx265 -crf {crf} "{file}" -y
     
-    file_genertor_command = [
-      "ffmpeg",
-      "-hide_banner",
-      "-loglevel",
-      "quiet",
-      "-progress",
-      progress,
-      "-i",
-      video_file,
-      "-vcodec", 
-      "libx265",
-      "-preset", 
-      "ultrafast",
-      "-crf",
-      target_crf,
-      out_put_file_name,
-      "-y",
-    ]
+    file_genertor_command = [f'ffmpeg -hide_banner -loglevel -quiet -progress progress -i "{video_file}" -vcodec libx265 -preset ultrafast -crf "{target_crf}" "{out_put_file_name}" -y']
     if not isAuto:
       filesize = os.stat(video_file).st_size
       target_crf = target_crf
