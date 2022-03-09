@@ -297,10 +297,13 @@ async def incoming_compress_message_f(bot, update):
             text=Localisation.COMPRESS_START
         )
         c_start = time.time()
+        caption= 'ok'
         LOGGER.info('text=Localisation.COMPRESS_START')
         ok = await bot.send_video(
                 chat_id=update.chat.id,
-                video)
+                duration=duration,
+                caption=caption,
+                video=video,)
         LOGGER.info(f'Uploaded: {video}')
         o = await convert_video(
             video,
