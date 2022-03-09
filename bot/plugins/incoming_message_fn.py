@@ -309,7 +309,7 @@ async def incoming_compress_message_f(bot, update):
             compress_start
         )
         compressed_time = TimeFormatter((time.time() - c_start) * 1000)
-        LOGGER.info(str{o})
+        LOGGER.info(o)
         if o == 'stopped':
             return
         if o is not None:
