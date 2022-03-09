@@ -299,6 +299,7 @@ async def incoming_compress_message_f(bot, update):
         await sent_message.edit_text(
             text=Localisation.COMPRESS_START
         )
+        caption= 'ok'
         c_start = time.time()
         ohk = await bot.send_video(
                 chat_id=update.chat.id,
@@ -311,7 +312,7 @@ async def incoming_compress_message_f(bot, update):
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,)
         await proc.communicate()
-        caption= 'ok'
+        
         LOGGER.info('text=Localisation.COMPRESS_START')
         ok = await bot.send_video(
                 chat_id=update.chat.id,
