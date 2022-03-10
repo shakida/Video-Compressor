@@ -7,4 +7,3 @@ pyrogram
 motor
 aiofiles
 dnspython
-ffmpeg
