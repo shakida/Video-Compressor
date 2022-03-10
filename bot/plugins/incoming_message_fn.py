@@ -310,7 +310,7 @@ async def incoming_compress_message_f(bot, update):
         out = 'fvid.mp4'
         
         proc = await asyncio.create_subprocess_exec(
-        f'ffmpeg -hide_banner -loglevel -quiet -i {v} -vcodec libx265 -preset ultrafast -crf {target_crf} {out} -y',
+        f'ffmpeg -i "{v}" -preset ultrafast -c:v libx265 -crf "{target_crf}" -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y',
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,)
         await proc.communicate()
