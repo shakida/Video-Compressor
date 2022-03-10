@@ -5,6 +5,6 @@ hachoir
 tgcrypto
 pyrogram
 motor
-https://github.com/Tinche/aiofiles/archive/master.zip
+aiofiles
 dnspython
 ffmpeg
