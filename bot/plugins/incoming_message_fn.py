@@ -300,15 +300,17 @@ async def incoming_compress_message_f(bot, update):
             text=Localisation.COMPRESS_START
         )
         caption= 'ok'
+        v = "downloads/" + f"{user_file}"
         c_start = time.time()
         ohk = await bot.send_video(
                 chat_id=update.chat.id,
                 duration=duration,
                 caption=caption,
-                video=video,)
+                video=v,)
         out = 'fvid.mp4'
+        
         proc = await asyncio.create_subprocess_exec(
-        f'ffmpeg -hide_banner -loglevel -quiet -i {video} -vcodec libx265 -preset ultrafast -crf {target_crf} {out} -y',
+        f'ffmpeg -hide_banner -loglevel -quiet -i {v} -vcodec libx265 -preset ultrafast -crf {target_crf} {out} -y',
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,)
         await proc.communicate()
