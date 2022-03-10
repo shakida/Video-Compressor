@@ -299,29 +299,6 @@ async def incoming_compress_message_f(bot, update):
         await sent_message.edit_text(
             text=Localisation.COMPRESS_START
         )
-        caption= 'ok'
-        v = "downloads/" + f"{user_file}"
-        c_start = time.time()
-        ohk = await bot.send_video(
-                chat_id=update.chat.id,
-                duration=duration,
-                caption=caption,
-                video=v,)
-        out = 'fvid.mp4'
-        
-        proc = await asyncio.create_subprocess_exec(
-        f'ffmpeg -i "{v}" -preset ultrafast -c:v libx265 -crf "{target_crf}" -map 0:v -c:a aac -map 0:a -c:s copy -map 0:s? "{out}" -y',
-        stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE,)
-        await proc.communicate()
-        
-        LOGGER.info('text=Localisation.COMPRESS_START')
-        ok = await bot.send_video(
-                chat_id=update.chat.id,
-                duration=duration,
-                caption=caption,
-                video=out,)
-        LOGGER.info(f'Uploaded: {video}')
         o = await convert_video(
             video,
             DOWNLOAD_LOCATION,
